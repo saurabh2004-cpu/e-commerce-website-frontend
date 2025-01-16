@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
-import { ImageLightboxCarousel } from './image-lightbox-carousel'
+import { ImageLightboxCarousel } from './Image-lightbox-carousel'
 import { Maximize2 } from 'lucide-react'
 
 
