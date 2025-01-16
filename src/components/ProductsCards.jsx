@@ -4,7 +4,7 @@ import { Heart, ArrowLeftRight, Star } from 'lucide-react'
 import { Button } from '../components/ui/button'
 import Link from 'next/link'
 
-export default function ProductGrid() {
+export default function ProductGrid({title="NEW PRODUCTS"}) {
   const products = [
     {
       id: 1,
@@ -49,10 +49,10 @@ export default function ProductGrid() {
   const categories = ["JEWELRY & WATCHES", "ELECTRONICS", "SPORTS & OUTDOORS"]
 
   return (
-    <div className="container mx-auto px-6 sm:px-32 py-8">
+    <div className="container mx-auto px-6 pt-32 sm:px-32 py-8">
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
-        <h2 className="text-2xl font-semibold">NEW PRODUCTS</h2>
+        <h2 className="text-2xl font-semibold">{title}</h2>
         <div className="flex flex-wrap justify-center md:justify-end gap-4">
           {categories.map((category) => (
             <button

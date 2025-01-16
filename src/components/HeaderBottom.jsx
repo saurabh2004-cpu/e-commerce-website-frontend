@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ChevronDown, ChevronRight, Menu, Smartphone, Camera, Watch, Gift, Car, Tv, Gamepad, Lightbulb, Plane, Star } from 'lucide-react'
+import { ChevronDown, ChevronRight, Menu, Smartphone, Camera, Watch, Gift, Car, Tv, Gamepad, Lightbulb, Plane, Star, Instagram, Facebook, Twitter, Phone } from 'lucide-react'
 import { Button } from "../components/ui/button"
 
 import {
@@ -263,141 +263,6 @@ export const HeaderBottom = () => {
       ]
     },
     {
-      name: 'Features',
-      type: 'dropdown',
-      hot: true,
-      content: [
-        {
-          title: 'LISTING PAGES',
-          links: ['Category Page 1', 'Category Page 2', 'Category Page 3']
-        },
-        {
-          title: 'PRODUCT PAGES',
-          links: ['Image size - big', 'Image size - medium', 'Image size - small']
-        },
-        {
-          title: 'SHOPPING PAGES',
-          links: ['Shopping Cart Page', 'Checkout Page', 'Compare Page', 'Wishlist Page']
-        },
-        {
-          title: 'MY ACCOUNT PAGES',
-          links: [
-            'Login Page',
-            'Register Page',
-            'My Account',
-            'Order History',
-            'Order Information',
-            'Product Returns',
-            'Gift Voucher'
-          ]
-        }
-      ]
-    },
-    {
-      name: 'Pages',
-      type: 'dropdown',
-      hot: true,
-      content: [
-        {
-          title: 'INFORMATION',
-          links: ['FAQ', 'Site Map', 'Contact us', 'Banner Effect']
-        },
-        {
-          title: 'ABOUT US',
-          links: ['About Us 1', 'About Us 2', 'About Us 3', 'About Us 4']
-        }
-      ]
-    },
-    {
-      name: 'Categories',
-      type: 'dropdown',
-      content: [
-        {
-          title: 'AUTOMOTIVE',
-          image: '/image/demo/cms/img1.jpg?height=200&width=300',
-          links: ['Car Alarms and Security', 'Car Audio & Speakers', 'Gadgets & Auto Parts']
-        },
-        {
-          title: 'ELECTRONICS',
-          image: '/image/demo/cms/img2.jpg?height=200&width=300',
-          links: ['Battereries & Chargers', 'Headphones, Headsets', 'Home Audio']
-        },
-        {
-          title: 'JEWELRY & WATCHES',
-          image: '/image/demo/cms/img3.jpg?height=200&width=300',
-          links: ['Earings', 'Wedding Rings', 'Men Watches']
-        },
-        {
-          title: 'BAGS & SUPPLIES',
-          image: '/image/demo/cms/img4.jpg?height=200&width=300',
-          links: ['Gift & Lifestyle Gadgets', 'Gift for Man', 'Gift for Woman']
-        }
-      ]
-    },
-    {
-      name: 'Accessories',
-      type: 'dropdown',
-      content: [
-        {
-          title: 'AUTOMOTIVE',
-          links: [
-            'Car Alarms and Security',
-            'Car Audio & Speakers',
-            'Gadgets & Auto Parts',
-            'More Car Accessories'
-          ]
-        },
-        {
-          title: 'SMARTPHONE & TABLETS',
-          links: [
-            'Accessories for i Pad',
-            'Apparel',
-            'Accessories for iPhone'
-          ]
-        },
-        {
-          title: 'SPORTS & OUTDOORS',
-          links: [
-            'Camping & Hiking',
-            'Cameras & Photo',
-            'Cables & Connectors'
-          ]
-        },
-        {
-          title: 'ELECTRONICS',
-          links: [
-            'Battereries & Chargers',
-            'Bath & Body',
-            'Outdoor & Traveling'
-          ]
-        },
-        {
-          title: 'BESTSELLER',
-          products: [
-            {
-              name: 'Filet Mign',
-              price: '$1,202.00',
-              image: '/image/demo/shop/product/35.jpg?height=100&width=100',
-              rating: 5
-            },
-            {
-              name: 'Dail Lulpa',
-              price: '$78.00',
-              image: '/image/demo/shop/product/W1.jpg?height=100&width=100',
-              rating: 4
-            },
-            {
-              name: 'Canon EOS 5D',
-              price: '$60.00',
-              oldPrice: '$145.00',
-              image: '/image/demo/shop/product/141.jpg?height=100&width=100',
-              rating: 0
-            }
-          ]
-        }
-      ]
-    },
-    {
       name: 'Blogs',
       type: 'link',
       href: '/blogs'
@@ -408,24 +273,27 @@ export const HeaderBottom = () => {
       href: '/about-us'
     },
     {
-      name: 'Collaboration',
+      name: 'Contact us',
+      type: 'link',
+      href: '/',
+      content: [
+        { title: 'sales@yourcompany.com',
+          icon: 'Mail@ :'
+
+         },
+        { title: '+1234567890',
+          icon:<Phone className='h-5 w-5' />
+         }
+      ]
+    },
+    {
+      name: 'Collaborate',
       type: 'link',
       href: '/collaboration'
-    }
+    },
   ]
 
-  const renderStarRating = (rating) => {
-    return (
-      <div className="flex gap-0.5">
-        {[...Array(5)].map((_, i) => (
-          <Star
-            key={i}
-            className={`h-4 w-4 ${i < rating ? 'fill-yellow-400 text-yellow-400' : 'fill-gray-200 text-gray-200'}`}
-          />
-        ))}
-      </div>
-    )
-  }
+
 
   const renderDropdownContent = (item) => {
     if (!item) return null;
@@ -453,96 +321,21 @@ export const HeaderBottom = () => {
             ))}
           </div>
         );
-      case 'Categories':
+      case 'Contact us':
         return (
-          <div className="grid grid-cols-2 gap-6">
-            {item.content.map((category, idx) => (
-              <div key={idx} className="group relative">
-                <div className="relative h-[200px] w-full overflow-hidden rounded-lg">
-                  <Image
-                    src={category.image}
-                    alt={category.title}
-                    fill
-                    className="object-cover transition-transform group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-black/40 transition-opacity group-hover:bg-black/50" />
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <h3 className="text-xl font-semibold text-white">{category.title}</h3>
-                    <ul className="mt-2 space-y-1">
-                      {category.links.map((link, linkIdx) => (
-                        <li key={linkIdx}>
-                          <Link href="#" className="text-sm text-white/90 hover:text-white">
-                            {link}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        );
-      case 'Accessories':
-        return (
-          <div className="grid grid-cols-2 ">
-            {item.content.slice(0, 4).map((section, idx) => (
-              <div key={idx} className="space-y-4">
-                <h3 className="font-medium text-gray-900">{section.title}</h3>
-                <ul className="space-y-2">
-                  {section.links.map((link, linkIdx) => (
-                    <li key={linkIdx}>
-                      <Link href="#" className="text-sm text-gray-600 hover:text-[#f4a137]">
-                        {link}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-
-          </div>
-        );
-      case 'Features':
-        return (
-          <div className="grid grid-cols-4 gap-8">
+          <div className="grid block justify-start  gap-4">
             {item.content.map((section, idx) => (
               <div key={idx} className="space-y-4">
-                <h3 className="font-medium text-gray-900">{section.title}</h3>
+                <div className="font-medium text-gray-900 flex"><span>{section.icon}</span><span className='hover:text-[#f4a137]'>{section.title}</span></div>
                 <ul className="space-y-2">
-                  {section.links.map((link, linkIdx) => (
-                    <li key={linkIdx}>
-                      <Link href="#" className="text-sm text-gray-600 hover:text-[#f4a137]">
-                        {link}
-                      </Link>
-                    </li>
-                  ))}
                 </ul>
               </div>
             ))}
           </div>
         );
-      case 'Pages':
-        return (
-          <div className="grid grid-cols-2 gap-8">
-            {item.content.map((section, idx) => (
-              <div key={idx} className="space-y-4">
-                <h3 className="font-medium text-gray-900">{section.title}</h3>
-                <ul className="space-y-2">
-                  {section.links.map((link, linkIdx) => (
-                    <li key={linkIdx}>
-                      <Link href="#" className="text-sm text-gray-600 hover:text-[#f4a137]">
-                        {link}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        );
+       
       default:
-        return
+        return null;
     }
   };
 
@@ -767,7 +560,11 @@ export const HeaderBottom = () => {
           {/* Horizontal Main Menu */}
           <div className="flex-1 hidden sm:block">
             <nav className="h-full">
+
+
               <ul className="flex h-full">
+
+                {/* left side nav items  */}
                 {menuItems.map((item) => (
                   <li
                     key={item.name}
@@ -793,7 +590,16 @@ export const HeaderBottom = () => {
                     )}
                   </li>
                 ))}
+
+                {/* right side icons */}
+                <ul className='flex items-center gap-2  '>
+                <li className='hover:text-[#f4a137]'><Link href='/'><Instagram className='h-5 w-10 ' /></Link></li>
+                <li className='hover:text-[#f4a137]'><Link href='/'><Facebook className='h-5 w-10 ' /></Link></li>
+                <li className='hover:text-[#f4a137]'><Link href='/'><Twitter className='h-5 w-10 ' /></Link></li>
+                </ul>
               </ul>
+
+
             </nav>
           </div>
         </div>
@@ -803,9 +609,10 @@ export const HeaderBottom = () => {
       <div className="absolute left-[400px] right-0 top-full z-50 hidden lg:block">
         {activeDropdown && (
           <div
-            className={`container bg-white p-6 text-gray-800 shadow-lg ${activeDropdown === 'Pages' ? 'w-[500px]' :
-                activeDropdown === 'Home' ? 'w-[1000px]' :
-                  'w-[1000px]'
+            className={`container bg-white p-6 text-gray-800 shadow-lg 
+              ${
+              activeDropdown === 'Home' ? 'w-[1000px]' : activeDropdown === 'Contact us' ? 'w-[300px] relative left-[200px]' :
+                'hidden'
               }`}
             onMouseEnter={() => setActiveDropdown(activeDropdown)}
             onMouseLeave={() => setActiveDropdown(null)}

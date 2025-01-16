@@ -4,18 +4,15 @@ import CategoryCards from "../components/CategoryCards";
 import Banners from "../components/Banners";
 import HotCategories from "../components/HotCategories";
 import Popup from "../components/PopUp";
-import Footer from "../components/Footer";
 
 export default function Home() {
   return (
     <>
-      {/* <HeaderTop />
-      <HeaderCenter />
-      <HeaderBottom /> */}
+     
       <BlockSpotLight1 />
       <ProductsCards />
       <Banners />
-      <ProductsCards />
+      <ProductsCards title={'Best Sellers'}/>
       <CategoryCards />
       <HotCategories />
       <Popup />

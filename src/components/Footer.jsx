@@ -3,8 +3,9 @@
 import { MapPin, Mail, Phone } from 'lucide-react'
 
 export default function Footer() {
+  
   const mainSections = {
-    Information: ['About Us', 'FAQ', 'Order history', 'Order information'],
+    
     'Customer Service': ['Contact Us', 'Returns', 'Site Map', 'My Account'],
     'My Account': ['Brands', 'Gift Vouchers', 'Affiliates', 'Specials', 'Our Blog'],
     'Contact Us': [
@@ -39,7 +40,7 @@ export default function Footer() {
     <footer className="bg-gray-100 pt-12 pb-4 p-6 sm:px-32">
       {/* Main Footer */}
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
           {Object.entries(mainSections).map(([title, items]) => (
             <div key={title}>
               <h2 className="text-lg font-semibold mb-4 text-gray-800">{title}</h2>

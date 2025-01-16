@@ -53,11 +53,7 @@ const promotionalBanners = [
 ];
 
 const features = [
-  {
-    icon: <DollarSign className="h-6 w-6" />,
-    title: '90 day',
-    subtitle: 'money back'
-  },
+  
   {
     icon: <Truck className="h-6 w-6" />,
     title: 'In-store',
@@ -168,21 +164,7 @@ export function BlockSpotLight1() {
           </div>
         </div>
 
-        {/* Features Section */}
-        <div className="mt-8 hidden sm:grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 bg-[#eee] p-4">
-          {features.map((feature, index) => (
-            <div
-              key={index}
-              className="flex items-center gap-4 p-4 rounded-lg transition-colors"
-            >
-              <div className="text-[#f4a137]">{feature.icon}</div>
-              <div>
-                <div className="font-medium text-sm md:text-base">{feature.title}</div>
-                <div className="text-xs md:text-sm text-gray-600">{feature.subtitle}</div>
-              </div>
-            </div>
-          ))}
-        </div>
+        
       </div>
     </section>
   );
