@@ -45,7 +45,7 @@ export const HeaderCenter = () => {
             <form className="flex w-full" onSubmit={(e) => e.preventDefault()}>
               <div className="relative flex w-full h-[36px] ">
                 <Select defaultValue="all">
-                  <SelectTrigger className="w-[180px] rounded-none bg-[#eeeeee]">
+                  <SelectTrigger className="w-[140px] sm:w-[180px] rounded-none bg-[#eeeeee]">
                     <SelectValue placeholder="All Categories" />
                   </SelectTrigger>
                   <SelectContent>
@@ -65,7 +65,7 @@ export const HeaderCenter = () => {
                 <input
                   type="text"
                   placeholder="Search"
-                  className="flex-1 px-4 py-2 border"
+                  className="w-[140px] flex-1 px-4 py-2 border"
                 />
                 <Button
                   type="submit"
