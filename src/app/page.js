@@ -15,7 +15,7 @@ export default function Home() {
       <ProductsCards title={'Best Sellers'}/>
       <CategoryCards />
       <HotCategories />
-      <Popup />
+      {/* <Popup /> */}
 
 
     </>

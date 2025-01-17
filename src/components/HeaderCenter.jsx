@@ -26,17 +26,17 @@ export const HeaderCenter = () => {
           {/* Logo */}
           <div className="w-full lg:w-1/4">
             <Link href="/" className="flex items-center justify-center sm:justify-start">
-              <div className="relative w-12 h-12">
+              <div className="relative w-450 h-220">
                 <Image
                   src="/image/demo/logos/theme_logo.png"
                   alt="Market Logo"
-                  width={48}
+                  width={208}
                   height={48}
-                  className="object-contain"
+                  // className="object-contain"
                   priority
                 />
               </div>
-              <span className="ml-2 text-2xl font-bold text-gray-800">MARKET</span>
+              {/* <span className="ml-2 text-2xl font-bold text-gray-800">MARKET</span> */}
             </Link>
           </div>
 
