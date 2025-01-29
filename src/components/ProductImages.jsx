@@ -7,9 +7,10 @@ import { Maximize2 } from 'lucide-react'
 
 
 
-export function ProductImages({ images }) {
+export function ProductImages({ images ,thumbnailImage}) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [showLightbox, setShowLightbox] = useState(false)
+  const[thumbnail, setThumbnail] = useState(thumbnailImage)
 
   const nextImage = () => {
     setCurrentIndex((prev) => (prev + 1) % images.length)
@@ -21,6 +22,7 @@ export function ProductImages({ images }) {
 
   const selectImage = (index) => {
     setCurrentIndex(index)
+    setThumbnail(images[index])
   }
 
   return (
@@ -28,7 +30,8 @@ export function ProductImages({ images }) {
       {/* Main Image */}
       <div className="relative  aspect-square rounded-lg overflow-hidden mb-4">
         <Image
-          src={images[currentIndex]}
+          // src={images[currentIndex]}
+          src={thumbnail}
           alt={`Product image ${currentIndex + 1}`}
           fill
           className="object-contain "

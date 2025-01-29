@@ -14,29 +14,31 @@ import Image from "next/image"
 
 
 
-export function ProductTabs() {
+export function ProductTabs({ product }) {
 
-  const technicalDetails = [
-    { label: "Model Name", value: "Buds N1" },
-    { label: "Connectivity Technology", value: "Wireless" },
-    { label: "Wireless Communication Technology", value: "Bluetooth" },
-    { label: "Special Feature", value: "Sweatproof, Lightweight, Rechargeable Battery, Fast Charging, Microphone Included" },
-    { label: "Included Components", value: "1N Bluetooth Headphone, 1N Charging Case, 1N Charging Cable, 1N User Manual, 1N Warranty Registration Card" },
-    { label: "Age Range (Description)", value: "Adult" },
-    { label: "Material", value: "Polycarbonate (PC)" },
-    { label: "Specific Uses For Product", value: "Entertainment" },
-    { label: "Compatible Devices", value: "Cellphones, Tablets, Laptops" },
-    { label: "Control Type", value: "Media Control" },
-    { label: "Cable Feature", value: "Without Cable" },
-    { label: "Item Weight", value: "50 Grams" },
-    { label: "Water Resistance Level", value: "Water Resistant" },
-    { label: "Net Quantity", value: "1 Piece" },
-    { label: "Style", value: "Modern" },
-    { label: "Battery Life", value: "40 Hours" },
-    { label: "Bluetooth Range", value: "10 Metres" },
-  ]
+  // const technicalDetails = [
+  //   { label: "Model Name", value: "Buds N1" },
+  //   { label: "Connectivity Technology", value: "Wireless" },
+  //   { label: "Wireless Communication Technology", value: "Bluetooth" },
+  //   { label: "Special Feature", value: "Sweatproof, Lightweight, Rechargeable Battery, Fast Charging, Microphone Included" },
+  //   { label: "Included Components", value: "1N Bluetooth Headphone, 1N Charging Case, 1N Charging Cable, 1N User Manual, 1N Warranty Registration Card" },
+  //   { label: "Age Range (Description)", value: "Adult" },
+  //   { label: "Material", value: "Polycarbonate (PC)" },
+  //   { label: "Specific Uses For Product", value: "Entertainment" },
+  //   { label: "Compatible Devices", value: "Cellphones, Tablets, Laptops" },
+  //   { label: "Control Type", value: "Media Control" },
+  //   { label: "Cable Feature", value: "Without Cable" },
+  //   { label: "Item Weight", value: "50 Grams" },
+  //   { label: "Water Resistance Level", value: "Water Resistant" },
+  //   { label: "Net Quantity", value: "1 Piece" },
+  //   { label: "Style", value: "Modern" },
+  //   { label: "Battery Life", value: "40 Hours" },
+  //   { label: "Bluetooth Range", value: "10 Metres" },
+  // ]
 
   return (
+
+    // description dropdown
     <Accordion type="single" collapsible className="w-full mt-8">
       <AccordionItem value="description">
         <AccordionTrigger className="text-lg font-semibold">DESCRIPTION</AccordionTrigger>
@@ -45,40 +47,26 @@ export function ProductTabs() {
 
             <div className="bg-[#FFFFE0] rounded-lg overflow-hidden">
               <Image
-                src="/image/ProductImages/productImage2.jpg?height=300&width=600"
-                alt="Rock On Feature"
+                src={product?.productDescriptionImage}
+                alt="product img"
                 width={600}
                 height={300}
                 className="w-full"
               />
+
               <div className="p-6">
-                <h3 className="text-2xl font-bold mb-2">ROCK ON ALL DAY AND NIGHT</h3>
+                <h3 className="text-2xl font-bold mb-2">{product.name}</h3>
                 <p className="text-gray-600">
-                  Binge your playlists with an incredible 40-hour playtime. From morning workouts
-                  to late-night jam sessions, never let the music stop.
+                  {product?.productDescription}
                 </p>
               </div>
-            </div>
-            <div className="bg-[#FFFFE0] rounded-lg overflow-hidden">
-              <Image
-                src="/image/ProductImages/productImage3.jpg?height=300&width=600"
-                alt="Rock On Feature"
-                width={600}
-                height={300}
-                className="w-full"
-              />
-              <div className="p-6">
-                <h3 className="text-2xl font-bold mb-2">ROCK ON ALL DAY AND NIGHT</h3>
-                <p className="text-gray-600">
-                  Binge your playlists with an incredible 40-hour playtime. From morning workouts
-                  to late-night jam sessions, never let the music stop.
-                </p>
-              </div>
+
             </div>
           </div>
         </AccordionContent>
       </AccordionItem>
 
+      {/* information deopdown */}
       <AccordionItem value="information">
         <AccordionTrigger className="text-lg font-semibold">INFORMATION</AccordionTrigger>
         <AccordionContent>
@@ -86,7 +74,7 @@ export function ProductTabs() {
             {/* Product Image */}
             <div className="relative h-[600px] rounded-lg overflow-hidden">
               <Image
-                src="/image/ProductImages/productImage4.jpg?height=600&width=600"
+                src={product?.images[0]}
                 alt="Product Information"
                 fill
                 className=" sm:object-cover"
@@ -97,18 +85,17 @@ export function ProductTabs() {
             <div>
               <h3 className="text-xl font-semibold mb-4">Technical Specifications</h3>
               <div className="grid grid-cols-1 gap-4">
-                {technicalDetails.map((detail, index) => (
-                  <div key={index} className="border-b pb-2">
-                    <dt className="text-gray-600 text-sm">{detail.label}</dt>
-                    <dd className="font-medium">{detail.value}</dd>
-                  </div>
-                ))}
+                <div className="border-b pb-2">
+                  <dt className="text-gray-600 text-sm">{product?.name}</dt>
+                  <dd className="font-medium">{product?.productDescription}</dd>
+                </div>
               </div>
             </div>
           </div>
         </AccordionContent>
       </AccordionItem>
 
+      {/* reviews dropdown */}
       <AccordionItem value="reviews">
         <AccordionTrigger className="text-lg font-semibold">REVIEWS</AccordionTrigger>
         <AccordionContent>
@@ -189,9 +176,11 @@ export function ProductTabs() {
                     </div>
                     <span className="text-sm text-gray-600">John D. - Verified Buyer</span>
                   </div>
-                  <p className="text-gray-700">
-                    Great sound quality and battery life is amazing. The fit is comfortable for long listening sessions.
-                  </p>
+
+                  {product?.previousReviews && <p className="text-gray-700">
+                    {product?.previousReviews[0]}
+                  </p>}
+
                 </div>
               </div>
             </div>

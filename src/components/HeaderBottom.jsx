@@ -197,70 +197,9 @@ export const HeaderBottom = () => {
   const menuItems = [
     {
       name: 'Home',
-      type: 'dropdown',
-      link: '/',
-      content: [
-        {
-          title: 'HOME PAGE - (DEFAULT)',
-          image: '/image/demo/feature/home-1.jpg',
-          link: '/',
-          layout: 1
-        },
-        {
-          title: 'HOME PAGE - LAYOUT 2',
-          image: '/image/demo/feature/home-2.jpg',
-          link: '/home-2',
-          layout: 2
-        },
-        {
-          title: 'HOME PAGE - LAYOUT 3',
-          image: '/image/demo/feature/home-3.jpg?height=200&width=300',
-          link: '/home-3',
-          layout: 3
-        },
-        {
-          title: 'HOME PAGE - LAYOUT 4',
-          image: '/image/demo/feature/home-4.jpg?height=200&width=300',
-          link: '/home-4',
-          layout: 4
-        },
-        {
-          title: 'HOME PAGE - LAYOUT 5',
-          image: '/image/demo/feature/home-5.jpg?height=200&width=300',
-          link: '/home-5',
-          layout: 5
-        },
-        {
-          title: 'HOME PAGE - LAYOUT 6',
-          image: '/image/demo/feature/home-6.jpg?height=200&width=300',
-          link: '/home-6',
-          layout: 6
-        },
-        {
-          title: 'HOME PAGE - LAYOUT 7',
-          image: '/image/demo/feature/home-7.jpg?height=200&width=300',
-          link: '/home-7',
-          layout: 7
-        },
-        {
-          title: 'HOME PAGE - LAYOUT 8',
-          image: '/image/demo/feature/home-rtl.jpg?height=200&width=300',
-          link: '/home-8',
-          layout: 8
-        },
-        {
-          title: 'HOME PAGE - LAYOUT RTL',
-          image: '/image/demo/feature/home-8.jpg?height=200&width=300',
-          link: '/home-rtl',
-          layout: 'RTL'
-        },
-        {
-          title: 'COMMING SOON',
-          image: '/image/demo/feature/coming-soon.png?height=200&width=300',
-          link: '/coming-soon',
-          layout: 'Coming Soon'
-        }
-      ]
+      type: 'link',
+      href: '/',
+
     },
     {
       name: 'Blogs',
@@ -277,13 +216,15 @@ export const HeaderBottom = () => {
       type: 'link',
       href: '/',
       content: [
-        { title: 'sales@yourcompany.com',
+        {
+          title: 'sales@yourcompany.com',
           icon: 'Mail@ :'
 
-         },
-        { title: '+1234567890',
-          icon:<Phone className='h-5 w-5' />
-         }
+        },
+        {
+          title: '+1234567890',
+          icon: <Phone className='h-5 w-5' />
+        }
       ]
     },
     {
@@ -299,28 +240,6 @@ export const HeaderBottom = () => {
     if (!item) return null;
 
     switch (item.name) {
-      case 'Home':
-        return (
-          <div className="grid grid-cols-5 gap-4">
-            {item.content.map((content, idx) => (
-              <Link key={idx} href={content.link} className="group block">
-                <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg border border-gray-200">
-                  <Image
-                    src={content.image}
-                    alt={content.title}
-                    fill
-                    className="object-cover transition-transform duration-300 group-hover:scale-105"
-                  />
-                </div>
-                <div className="mt-2 text-center">
-                  <h3 className="text-sm font-medium text-gray-900 group-hover:text-[#f4a137]">
-                    {content.title}
-                  </h3>
-                </div>
-              </Link>
-            ))}
-          </div>
-        );
       case 'Contact us':
         return (
           <div className="grid block justify-start  gap-4">
@@ -333,11 +252,14 @@ export const HeaderBottom = () => {
             ))}
           </div>
         );
-       
+
       default:
         return null;
     }
   };
+
+
+  
 
   return (
     <div className="w-full bg-[#444444] text-white px-4 lg:px-32 overflow-visible relative">
@@ -432,7 +354,7 @@ export const HeaderBottom = () => {
                           </AccordionTrigger>
                           <AccordionContent>
                             <div className="space-y-4 px-4">
-                              {item.content.map((section, idx) => (
+                              {item.content?.map((section, idx) => (
                                 <div key={idx}>
                                   <h4 className="mb-2 font-medium">{section.title}</h4>
                                   <ul className="space-y-2">
@@ -593,9 +515,9 @@ export const HeaderBottom = () => {
 
                 {/* right side icons */}
                 <ul className='flex items-center gap-2  '>
-                <li className='hover:text-[#f4a137]'><Link href='/'><Instagram className='h-5 w-10 ' /></Link></li>
-                <li className='hover:text-[#f4a137]'><Link href='/'><Facebook className='h-5 w-10 ' /></Link></li>
-                <li className='hover:text-[#f4a137]'><Link href='/'><Twitter className='h-5 w-10 ' /></Link></li>
+                  <li className='hover:text-[#f4a137]'><Link href='/'><Instagram className='h-5 w-10 ' /></Link></li>
+                  <li className='hover:text-[#f4a137]'><Link href='/'><Facebook className='h-5 w-10 ' /></Link></li>
+                  <li className='hover:text-[#f4a137]'><Link href='/'><Twitter className='h-5 w-10 ' /></Link></li>
                 </ul>
               </ul>
 
@@ -610,8 +532,7 @@ export const HeaderBottom = () => {
         {activeDropdown && (
           <div
             className={`container bg-white p-6 text-gray-800 shadow-lg 
-              ${
-              activeDropdown === 'Home' ? 'w-[1000px]' : activeDropdown === 'Contact us' ? 'w-[300px] relative left-[200px]' :
+              ${activeDropdown === 'Contact us' ? 'w-[300px] relative left-[200px]' :
                 'hidden'
               }`}
             onMouseEnter={() => setActiveDropdown(activeDropdown)}

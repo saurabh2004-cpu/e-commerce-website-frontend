@@ -12,6 +12,7 @@ export function ImageLightboxCarousel({
   onPrevious, 
   onNext 
 }) {
+  
   useEffect(() => {
     const handleEscape = (e) => {
       if (e.key === 'Escape') onClose()
