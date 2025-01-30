@@ -5,36 +5,23 @@ import Link from 'next/link'
 import { ProductImages } from '../../components/ProductImages'
 import { ProductTabs } from '../../components/Product-tabs'
 import { RelatedProducts } from '../../components/RelatedProducts'
-import { useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import axios from 'axios'
 import { useSearchParams } from 'next/navigation'
 import { host } from '../../lib/host.js'
 
 
-export default function ProductDetails() {
-    // const productImages = [
-    //     "/image/ProductImages/productImahge1.jpg?height=600&width=600",
-    //     "/image/ProductImages/productImage2.jpg?height=600&width=600",
-    //     "/image/ProductImages/productImage3.jpg?height=600&width=600",
-    //     "/image/ProductImages/productImage4.jpg?height=600&width=600",
-    //     "/image/ProductImages/productImage5.jpg?height=600&width=600",
-    // ]
+export default function BlogDetailsPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ProductDetails />
+    </Suspense>
+  );
+}
 
-    // const specifications = [
-    //     { label: "Brand", value: "Noise" },
-    //     { label: "Colour", value: "Black" },
-    //     { label: "Ear Placement", value: "In Ear" },
-    //     { label: "Form Factor", value: "True Wireless" },
-    //     { label: "Headphones Jack", value: "wireless" },
-    // ]
 
-    // const features = [
-    //     "Up to 40-hour playtime: Dive into a marathon of music with an incredible 40-hour playtime.",
-    //     "Quad Mic with ENC: Experience crystal-clear calls with Quad Mic and ENC in action.",
-    //     "11mm Driver: Enjoy a powerful sound experience elevated with the precision of an 11mm driver.",
-    //     "Ultra-low latency: Enjoy lag-free communication thanks to the ultra-low latency of up to 40ms.",
-    //     "Instacharge: Top up your beats in just 10 minutes for a playtime of 120 minutes.",
-    // ]
+ function ProductDetails() {
+   
 
     const [error, setError] = useState()
     const [product, setProduct] = useState()

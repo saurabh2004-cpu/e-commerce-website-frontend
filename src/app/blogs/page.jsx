@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { Home, Calendar, Star, StarHalf } from 'lucide-react'
+import { Home, Star } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { host } from '../../lib/host.js'

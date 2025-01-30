@@ -1,5 +1,5 @@
 'use client'
-import { use, useEffect, useState } from 'react'
+import { use, useEffect, useState,Suspense } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Home, Calendar, Star, MessageCircle, User } from 'lucide-react'
@@ -12,9 +12,15 @@ import { host } from '../../lib/host.js'
 import { useRouter, useSearchParams } from 'next/navigation'
 import axios from 'axios'
 
+export default function BlogDetailsPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <BlogDetails />
+    </Suspense>
+  );
+}
 
-
-export default function BlogDetails() {
+ function BlogDetails() {
   const [showLightbox, setShowLightbox] = useState(false)
   const [blog, setBlog] = useState({})
   const router = useRouter()
@@ -285,8 +291,8 @@ export default function BlogDetails() {
 
     {showLightbox && (
       <ImageCard
-        image="/image/demo/blog/blog4.jpg?height=800&width=1200"
-        alt="Kire tuma demonstraverunt lector"
+        image={blog.detailImage}
+        alt="Blog Image"
         onClose={() => setShowLightbox(false)}
       />
     )}

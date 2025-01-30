@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { Search, ShoppingCart, X } from 'lucide-react'
+import { Search, X } from 'lucide-react'
 
 import { Button } from "../components/ui/button"
 
