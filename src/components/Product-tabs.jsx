@@ -47,7 +47,7 @@ export function ProductTabs({ product }) {
 
             <div className="bg-[#FFFFE0] rounded-lg overflow-hidden">
               <Image
-                src={product?.images[1]}
+                src={product?.productDescriptionImage}
                 alt="product img"
                 width={600}
                 height={300}
@@ -56,8 +56,11 @@ export function ProductTabs({ product }) {
 
               <div className="p-6">
                 <h3 className="text-2xl font-bold mb-2">{product?.name}</h3>
-                <p className="text-gray-600">
-                  {product?.productDescription}
+                <p 
+                className="text-gray-600"
+                dangerouslySetInnerHTML={{ __html: product?.productDescription }}
+                >
+                  {/* {product?.productDescription} */}
                 </p>
               </div>
 
@@ -74,7 +77,7 @@ export function ProductTabs({ product }) {
             {/* Product Image */}
             <div className="relative h-[600px] rounded-lg overflow-hidden">
               <Image
-                src={product?.images[0]}
+                src={product.productDescriptionImage}
                 alt="Product Information"
                 fill
                 className=" sm:object-cover"
@@ -86,8 +89,11 @@ export function ProductTabs({ product }) {
               <h3 className="text-xl font-semibold mb-4">Technical Specifications</h3>
               <div className="grid grid-cols-1 gap-4">
                 <div className="border-b pb-2">
-                  <dt className="text-gray-600 text-sm">{product?.name}</dt>
-                  <dd className="font-medium">{product?.productDescription}</dd>
+                  <dt 
+                  className="text-gray-600 text-sm"
+                  dangerouslySetInnerHTML={{ __html: product?.productDetail }}
+                  ></dt>
+                  <dd className="font-medium"></dd>
                 </div>
               </div>
             </div>

@@ -26,7 +26,6 @@ export default function BlogDetailsPage() {
     const [error, setError] = useState()
     const [product, setProduct] = useState()
     const [productId, setProductId] = useState()
-    const [productDiscountedPrice, setProductDiscountedPrice] = useState()
 
     //get product id from url
     const searchParams = useSearchParams();
@@ -42,8 +41,8 @@ export default function BlogDetailsPage() {
     //calculate product discount
     const calculateDiscount = (originalPrice, discount) => {
         const discountAmount = (originalPrice * discount) / 100
-        const discountedPrice = originalPrice - discountAmount
-        return discountedPrice.toFixed(2)
+        return discountAmount.toFixed(2)
+        // const discountedPrice = originalPrice - discountAmount
     }
 
 
@@ -76,12 +75,7 @@ export default function BlogDetailsPage() {
         if (productId) {
             fetchProduct()
         }
-        if (product) {
-            const discountedPrice = calculateDiscount(product.price, 17)
-            if (discountedPrice) {
-                setProductDiscountedPrice(discountedPrice)
-            }
-        }
+        
     }, [productId])
 
     if (error) {
@@ -132,9 +126,11 @@ export default function BlogDetailsPage() {
 
                     {/* Price */}
                     <div className="mb-8">
-                        <span className="text-3xl font-bold">{productDiscountedPrice}</span>
+                        {/* <span className="text-3xl font-bold">{productDiscountedPrice}</span> */}
+                        <span className="text-3xl font-bold">{product.sellingPrice}</span>
                         <span className="text-gray-500 line-through ml-2">{product?.originalPrice}</span>
                         <span className="text-green-500 font-semibold ml-2">17% off</span>
+                        <span className="text-gray-500  ml-2">{calculateDiscount(product?.originalPrice, 17)} off</span>
                     </div>
 
 
