@@ -7,7 +7,9 @@ import { ProductTabs } from '../../components/Product-tabs'
 import { RelatedProducts } from '../../components/RelatedProducts'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import { useRouter } from 'next/router'
+import { useSearchParams } from 'next/navigation'
+import { host } from '../../lib/host.js'
+
 
 export default function ProductDetails() {
     // const productImages = [
@@ -40,8 +42,8 @@ export default function ProductDetails() {
     const [productDiscountedPrice, setProductDiscountedPrice] = useState()
 
     //get product id from url
-    const router = useRouter()
-    const { id } = router.query
+    const searchParams = useSearchParams();
+    const id = searchParams.get('id');
 
     useEffect(() => {
         if (id) {
@@ -57,13 +59,23 @@ export default function ProductDetails() {
         return discountedPrice.toFixed(2)
     }
 
+
     //fetch product by id 
     const fetchProduct = async () => {
         try {
-            const response = await axios.get(` /api/v1/products/${productId}`)
+            const response = await axios.get(`${host}/api/v1/products/${productId}`,
+                {
+                    withCredentials: true,
+                    headers: {
+                        Accept: 'application/json',
+                    },
+                },
+            )
 
-            if (response.status === 200) {
-                setProduct(response.data)
+
+            if (response.data.statusCode === 200) {
+                console.log("product", response.data)
+                setProduct(response.data.data)
             }
         } catch (error) {
             setError(error)
@@ -74,17 +86,23 @@ export default function ProductDetails() {
 
     //api calls
     useEffect(() => {
-        fetchProduct()
-        if(product){
+        if (productId) {
+            fetchProduct()
+        }
+        if (product) {
             const discountedPrice = calculateDiscount(product.price, 17)
-            if(discountedPrice){
+            if (discountedPrice) {
                 setProductDiscountedPrice(discountedPrice)
             }
         }
-    }, [product._id])
+    }, [productId])
 
-    if(error){
+    if (error) {
         return <div>{error.message}</div>
+    }
+
+    if (!product) {
+        return <h1>Loading ...</h1>
     }
 
     return (
@@ -104,10 +122,12 @@ export default function ProductDetails() {
 
             <div className="grid lg:grid-cols-2 gap-12">
                 {/* Left Column - Product Images */}
-                <ProductImages images={product.images} thumbnailImage={product.thumbnail} />
+                <div className='sm:sticky sm:top-0 sm:p-4'>
+                    <ProductImages images={product?.images} thumbnailImage={product?.images[0]} />
+                </div>
 
                 {/* Right Column - Product Info */}
-                <div>
+                <div className="h-full overflow-y-auto scrollbar-hidden">
                     <h1 className="text-2xl md:text-2xl font-semibold mb-4">
                         {product?.name}
                     </h1>
@@ -133,8 +153,9 @@ export default function ProductDetails() {
 
                     {/* About This Item */}
                     <div>
-                        {product?.productDetail}
-
+                        <div
+                            dangerouslySetInnerHTML={{ __html: product?.productDetail }}
+                        />
                         <button className="text-primary hover:underline mt-4">
                             See more product details
                         </button>
@@ -143,7 +164,7 @@ export default function ProductDetails() {
                         BUY ON AMAZON
                     </button>
 
-                    
+
 
                     <ProductTabs product={product} />
 

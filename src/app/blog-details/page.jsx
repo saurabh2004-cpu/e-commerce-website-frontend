@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { use, useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Home, Calendar, Star, MessageCircle, User } from 'lucide-react'
@@ -8,12 +8,46 @@ import { Button } from "../../components/ui/button"
 import { Input } from "../../components/ui/input"
 import { Textarea } from "../../components/ui/textarea"
 import { ImageCard } from '../../components/ImageCard'
+import { host } from '../../lib/host.js'
+import { useRouter, useSearchParams } from 'next/navigation'
+import axios from 'axios'
 
 
 
 export default function BlogDetails() {
   const [showLightbox, setShowLightbox] = useState(false)
+  const [blog, setBlog] = useState({})
+  const router = useRouter()
 
+  const searchParams = useSearchParams();
+  const blogId = searchParams.get('blogId')
+
+  //fetch blog by id
+  const fetchBlog = async () => {
+    try {
+      const response = await axios.get(`${host}/api/v1/blogs/${blogId}`,
+        {
+          withCredentials: true,
+          headers: {
+            Accept: 'application/json',
+          },
+        },
+      )
+
+
+      if (response.data.statusCode === 200) {
+        console.log("blog details", response.data)
+        setBlog(response.data.data)
+      }
+
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  useEffect(() => {
+    fetchBlog()
+  }, [blogId])
 
   // categories
   const categories = [
@@ -55,7 +89,6 @@ export default function BlogDetails() {
     }
   ]
 
-
   const renderRating = (rating) => {
     return (
       <div className="flex gap-0.5">
@@ -72,6 +105,10 @@ export default function BlogDetails() {
     )
   }
 
+  if (!blog) {
+    return <h1>Loading ...</h1>
+  }
+  
   return (<>
     <div className="container mx-auto px-4 md:px-32 py-8">
       {/* Breadcrumb */}
@@ -82,7 +119,7 @@ export default function BlogDetails() {
         <span>/</span>
         <Link href="/blog" className="text-primary hover:text-[#f4a137]">Blog</Link>
         <span>/</span>
-        <Link href="/blog" className="text-primary hover:text-[#f4a137]">Kire tuma demonstraverunt lector</Link>
+        <Link href="/blog" className="text-primary hover:text-[#f4a137]">{blog.title}</Link>
       </nav>
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
@@ -138,7 +175,7 @@ export default function BlogDetails() {
           {/* Article Header */}
           <header className="mb-8">
             <h1 className="text-2xl md:text-4xl font-bold mb-4">
-              Kire tuma demonstraverunt lector
+              {blog.title}
             </h1>
 
             <div className="flex flex-wrap gap-4 text-sm text-gray-600 mb-6">
@@ -147,8 +184,10 @@ export default function BlogDetails() {
                 <span>Post by: <a href="#" className="text-primary hover:underline">Admin</a></span>
               </div>
               <div className="flex items-center gap-2">
-                <Calendar className="w-4 h-4" />
-                <span>Created Date: Tue, Feb 16, 2016</span>
+                {/* <Calendar className="w-4 h-4" />
+                <span>
+                  Created Date: {blog.createdAt.toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}
+                </span> */}
               </div>
               <div className="flex items-center gap-2">
                 <MessageCircle className="w-4 h-4" />
@@ -162,8 +201,8 @@ export default function BlogDetails() {
             onClick={() => setShowLightbox(true)}
           >
             <Image
-              src="/image/demo/blog/blog4.jpg?height=400&width=800"
-              alt="Kire tuma demonstraverunt lector"
+              src={blog.detailImage}
+              alt="blog-img"
               fill
               className="object-cover"
               sizes="(max-width: 768px) 100vw, 800px"
@@ -172,28 +211,10 @@ export default function BlogDetails() {
 
           {/* Article Content */}
           <div className="prose prose-lg max-w-none mb-12 flex flex-col gap-6">
-            <p>
-              Morbi tempus, non ullamcorper euismod, erat odio suscipit purus, nec ornare lacus turpis
-              ac purus. Mauris cursus in mi vel dignissim. Morbi mollis elit ipsum, a feugiat lectus
-              gravida non. Aenean molestie justo sed aliquam euismod. Maecenas laoreet bibendum
-              laoreet. Morbi tempor massa sit amet purus lobortis, non porta tellus dignissim.
-
-            </p>
-            <p>
-              Proin dictum justo a nisl pellentesque egestas. Nulla commodo euismod nisi ac bibendum.
-              Mauris in pellentesque tellus, in cursus magna. Sed volutpat dui bibendum mi molestie,
-              at volutpat nunc dictum. Fusce sagittis massa id eros scelerisque, eget accumsan magna
-              lacinia. Nullam posuere neque at neque dictum interdum
-            </p>
-            <p>
-              Mauris cursus in mi vel dignissim. Morbi mollis elit ipsum, a feugiat lectus gravida
-              non. Aenean molestie justo sed aliquam euismod. Maecenas laoreet bibendum laoreet. Morbi
-              tempor massa sit amet purus lobortis, non porta tellus dignissim. Proin dictum justo a
-              nisl pellentesque egestas. Nulla commodo euismod nisi ac bibendum. Mauris in pellentesque
-              tellus, in cursus magna. Sed volutpat dui bibendum mi molestie, at volutpat nunc dictum.
-              Fusce sagittis massa id eros scelerisque, eget accumsan magna lacinia. Nullam posuere
-              neque at neque dictum interdum
-            </p>
+            <div
+              dangerouslySetInnerHTML={{ __html: blog.content }}
+            >
+            </div>
           </div>
 
           {/* Comment Form */}

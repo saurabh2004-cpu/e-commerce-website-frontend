@@ -6,20 +6,20 @@ export default function Footer() {
   
   const mainSections = {
     
-    'Customer Service': ['Contact Us', 'Returns', 'Site Map', 'My Account'],
-    'My Account': ['Brands', 'Gift Vouchers', 'Affiliates', 'Specials', 'Our Blog'],
+    'Others': ['Brands', 'Privacy Policy', 'Terms & Conditions', 'Promotions', 'Collaborations'],
+    'My Account': ['Brands', 'Affiliates', 'Specials', 'Our Blog','Promotions'],
     'Contact Us': [
       {
         icon: MapPin,
-        text: 'My Company, 42 avenue des Champs Elysées 75000 Paris France'
+        text: 'Home Shopper india'
       },
       {
         icon: Mail,
-        text: 'Email: sales@yourcompany.com'
+        text: 'Email: homeshopper247@gmail.com'
       },
       {
         icon: Phone,
-        text: 'Phone 1: 0123456789\nPhone 2: (123) 4567890'
+        text: 'Phone +91: 9326768443'
       }
     ]
   }

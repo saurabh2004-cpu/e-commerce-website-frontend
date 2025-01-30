@@ -5,11 +5,7 @@ import Link from "next/link"
 import { Search, ShoppingCart, X } from 'lucide-react'
 
 import { Button } from "../components/ui/button"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from "../components/ui/dropdown-menu"
+
 import {
   Select,
   SelectContent,
@@ -17,8 +13,74 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../components/ui/select"
+import { use, useEffect, useState } from "react"
+
+import { host } from '../lib/host'
+import { useRouter } from "next/navigation"
+import axios from "axios"
+
 
 export const HeaderCenter = () => {
+  const [allCategories, setAllCategories] = useState([]);
+  const [category, setCategory] = useState("all");
+  const [error, setError] = useState(null);
+  const [product, setProduct] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const router = useRouter();
+  //fetch categories
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get(`${host}/api/v1/categories/get/names`,
+        {
+          withCredentials: true,
+          headers: {
+            Accept: 'application/json',
+          },
+        }
+      )
+
+      if (response.status === 200) {
+        // console.log("categories",response)
+        setAllCategories(response.data.data)
+      }
+    } catch (error) {
+      setError(error);
+      console.error(error)
+    }
+  }
+
+  //search product by keyword or filter
+  const handleGetProductByKeywordOrFilter = async () => {
+    e.preventDefault()
+    try {
+
+      const response = await axios.get(`${host}/api/v1/products?search=${searchTerm}`,
+        {
+          withCredentials: true,
+          headers: {
+            Accept: 'application/json',
+          },
+        }
+      )
+      // console.log("searched", response)
+
+      if (response.data.statusCode === 200) {
+        setProduct(response.data.data)
+        setSearchTerm("")
+        router.push(`/product-details?id=${product._id}`);
+      }
+
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
+
+
   return (
     <div className="w-full py-6 bg-white border-b sm:px-32 ">
       <div className="container mx-auto px-4">
@@ -42,30 +104,28 @@ export const HeaderCenter = () => {
 
           {/* Search */}
           <div className="w-full lg:w-2/4 ">
-            <form className="flex w-full" onSubmit={(e) => e.preventDefault()}>
+            <form className="flex w-full" onSubmit={handleGetProductByKeywordOrFilter}>
               <div className="relative flex w-full h-[36px] ">
                 <Select defaultValue="all">
                   <SelectTrigger className="w-[140px] sm:w-[180px] rounded-none bg-[#eeeeee]">
                     <SelectValue placeholder="All Categories" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="all">All Categories</SelectItem>
-                    <SelectItem value="apparel">Apparel</SelectItem>
-                    <SelectItem value="cables">Cables & Connectors</SelectItem>
-                    <SelectItem value="cameras">Cameras & Photo</SelectItem>
-                    <SelectItem value="lights">Flashlights & Lamps</SelectItem>
-                    <SelectItem value="mobile">Mobile Accessories</SelectItem>
-                    <SelectItem value="games">Video Games</SelectItem>
-                    <SelectItem value="jewelry">Jewelry & Watches</SelectItem>
-                    <SelectItem value="earrings">Earings</SelectItem>
-                    <SelectItem value="rings">Wedding Rings</SelectItem>
-                    <SelectItem value="watches">Men Watches</SelectItem>
+
+                    {allCategories.map((category) => (
+                      <SelectItem key={category._id} value={category.name} onClick={() => setCategory(category.name)}>
+                        {category.name}
+                      </SelectItem>
+                    ))}
+
                   </SelectContent>
                 </Select>
                 <input
                   type="text"
                   placeholder="Search"
                   className="w-[140px] flex-1 px-4 py-2 border"
+                  value={searchTerm} // Bind input value to state
+                  onChange={(e) => setSearchTerm(e.target.value)}
                 />
                 <Button
                   type="submit"

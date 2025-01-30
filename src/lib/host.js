@@ -1,0 +1,1 @@
+export const host = "https://admin-panel-backend-flax.vercel.app"

@@ -3,12 +3,15 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { Home, Calendar, Star, StarHalf } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+import { host } from '../../lib/host.js'
 
 
 
 export default function BlogPage() {
 
-    // categories
+  // categories
   const categories = [
     "Our Blog",
     "Demo Category 2",
@@ -68,14 +71,14 @@ export default function BlogPage() {
       author: "Admin"
     },
     {
-        id: 3,
-        title: "Nire Tmas Kite Traverunt Lector Legere Legunt",
-        date: "Tue, Feb 16, 2016",
-        image: "/image/demo/blog/blog6.jpg?height=300&width=400",
-        description: "Morbi tempus, non ullamcorper euismod, erat odio suscipit purus, nec ornare lacus turpis ac purus. Mauris cursus in mi vel dignissim. Morbi mollis elit ipsum, a feugiat lectus gravida non.",
-        comments: 0,
-        author: "Admin"
-      },
+      id: 3,
+      title: "Nire Tmas Kite Traverunt Lector Legere Legunt",
+      date: "Tue, Feb 16, 2016",
+      image: "/image/demo/blog/blog6.jpg?height=300&width=400",
+      description: "Morbi tempus, non ullamcorper euismod, erat odio suscipit purus, nec ornare lacus turpis ac purus. Mauris cursus in mi vel dignissim. Morbi mollis elit ipsum, a feugiat lectus gravida non.",
+      comments: 0,
+      author: "Admin"
+    },
     {
       id: 4,
       title: "Neque Porro Quisquam Est, Qui Dolorem Ipsum",
@@ -86,6 +89,34 @@ export default function BlogPage() {
       author: "Admin"
     },
   ]
+
+  const [allBlogs, setAllBlogs] = useState([])
+
+  //fetch all blogs
+
+  const fetchBlogs = async () => {
+    try {
+      const response = await axios.get(`${host}/api/v1/blogs/get/all`,
+        {
+          withCredentials: true,
+          headers: {
+            Accept: 'application/json',
+          },
+        }
+      )
+
+      if (response.data.statusCode === 200) {
+        console.log("object", response.data.data)
+        setAllBlogs(response.data.data)
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  useEffect(() => {
+    fetchBlogs()
+  }, [])
 
   const renderRating = (rating) => {
     return (
@@ -124,8 +155,8 @@ export default function BlogPage() {
             <ul className="space-y-2">
               {categories.map((category, index) => (
                 <li key={index}>
-                  <Link 
-                    href="#" 
+                  <Link
+                    href="#"
                     className={`block p-2 rounded transition-colors hover:text-[#f4a137]`}
                   >
                     {category}
@@ -166,37 +197,38 @@ export default function BlogPage() {
         <main className="lg:col-span-3">
           <div className="mb-8">
             <h1 className="text-3xl font-bold mb-2 ">Our Blog</h1>
-            <p className="text-gray-600">Ac tincidunt Suspendisse malesuada velit in Nullam elit magnis netus Vestibulum.</p>
           </div>
 
           {/* Blog Posts */}
           <div className="space-y-8">
-            {blogPosts.map((post) => (
-              <article key={post.id} className="grid md:grid-cols-3 gap-6">
+            {allBlogs.map((blog) => (
+              <article key={blog._id} className="grid md:grid-cols-3 gap-6">
                 <div className="relative h-60 md:h-full overflow-hidden group">
                   <Image
-                    src={post.image}
-                    alt={post.title}
+                    src={blog.thumbnail}
+                    alt='blog-img'
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-110"
                   />
                 </div>
                 <div className="md:col-span-2">
                   <h2 className="text-xl font-semibold mb-2 hover:text-[#f4a137]">
-                    <Link href="/blog-details">{post.title}</Link>
+                    <Link href={`/blog-details?blogId=${blog._id}`}>
+                      {blog.title}
+                    </Link>
                   </h2>
                   <div className="flex items-center gap-2 text-gray-500 text-sm mb-4">
-                    <Calendar className="w-4 h-4" />
-                    {post.date}
+                    {/* <Calendar className="w-4 h-4" />
+                    {String(blog.createdAt)} */}
                   </div>
-                  <p className="text-gray-600 mb-4">{post.description}</p>
+                  <p className="text-gray-600 mb-4">{blog?.content}</p>
                   <div className="flex items-center gap-4 text-sm text-gray-500">
-                    <Link href="#" className="hover:text-primary">
-                      {post.comments} Comments
-                    </Link>
-                    <span>
-                      Post by <span className="text-primary">{post.author}</span>
-                    </span>
+                    {blog?.comments &&
+                      <Link href="#" className="hover:text-primary">
+                        {post.comments} Comments
+                      </Link>
+                    }
+
                   </div>
                 </div>
               </article>
@@ -212,7 +244,7 @@ export default function BlogPage() {
               2
             </button>
             <button className="w-8 h-8 flex items-center justify-center rounded hover:bg-gray-100">
-              &gt;
+              3;
             </button>
             <button className="w-8 h-8 flex items-center justify-center rounded hover:bg-gray-100">
               &gt;|

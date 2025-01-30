@@ -26,7 +26,7 @@ export function ProductImages({ images ,thumbnailImage}) {
   }
 
   return (
-    <div className="relative">
+    <div className="relative sm:sticky sm:top-0">
       {/* Main Image */}
       <div className="relative  aspect-square rounded-lg overflow-hidden mb-4">
         <Image
@@ -48,7 +48,7 @@ export function ProductImages({ images ,thumbnailImage}) {
       {/* Thumbnails */}
       <div className="relative">
         <div className="flex sm:gap-4 overflow-x-auto scrollbar-hide md:p-2">
-          {images.map((image, index) => (
+          {images?.map((image, index) => (
             <button
               key={index}
               onClick={() => selectImage(index)}

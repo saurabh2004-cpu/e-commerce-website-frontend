@@ -47,7 +47,7 @@ export function ProductTabs({ product }) {
 
             <div className="bg-[#FFFFE0] rounded-lg overflow-hidden">
               <Image
-                src={product?.productDescriptionImage}
+                src={product?.images[1]}
                 alt="product img"
                 width={600}
                 height={300}
@@ -55,7 +55,7 @@ export function ProductTabs({ product }) {
               />
 
               <div className="p-6">
-                <h3 className="text-2xl font-bold mb-2">{product.name}</h3>
+                <h3 className="text-2xl font-bold mb-2">{product?.name}</h3>
                 <p className="text-gray-600">
                   {product?.productDescription}
                 </p>

@@ -2,9 +2,10 @@
 
 import { Heart, ArrowLeftRight, Star } from 'lucide-react'
 import { Button } from '../components/ui/button'
-import Link from 'next/link'
 import { useState } from 'react'
 import axios from 'axios'
+import { host } from '../lib/host'
+import { useRouter } from 'next/navigation'
 
 export default function ProductGrid({ title = "NEW PRODUCTS" }) {
   // const products = [
@@ -51,15 +52,30 @@ export default function ProductGrid({ title = "NEW PRODUCTS" }) {
   const categories = ["JEWELRY & WATCHES", "ELECTRONICS", "SPORTS & OUTDOORS"]
 
   const [products, setProducts] = useState([])
+  const router = useRouter()
+
+
+  //navigate to product details 
+  const handleNavigateToProductDetails = (productId) => {
+    router.push(`/product-details?id=${productId}`);
+  }
 
 
   //fetch products Get all products
   const fetchAllProducts = async () => {
     try {
-      const response = await axios.get('/api/v1/products/get/all')
+      const response = await axios.get(`${host}/api/v1/products/get/all`,
+        {
+          withCredentials: true,
+          headers: {
+            Accept: 'application/json',
+          },
+        },
+      )
+      // console.log("object", response)
 
-      if (statusCode === 200) {
-        setProducts(response.data)
+      if (response.data.statusCode === 200) {
+        setProducts(response.data.data)
       }
     } catch (error) {
       console.error(error)
@@ -70,7 +86,11 @@ export default function ProductGrid({ title = "NEW PRODUCTS" }) {
     fetchAllProducts()
   }, [])
 
-  
+
+  if (!products) {
+    return <h1>Loading</h1>
+  }
+
 
   return (
     <div className="container mx-auto px-6 pt-32 sm:px-32 py-8">
@@ -114,28 +134,25 @@ export default function ProductGrid({ title = "NEW PRODUCTS" }) {
               />
               <div className="absolute inset-0 flex flex-col items-center justify-end">
                 <img
-                  src={product.secondImage}
+                  src={product.images[0]}
                   alt={`${product.productDescriptionImage} - alternate view`}
                   className="w-full h-[300px] object-cover transform translate-y-full transition-transform duration-300 group-hover:translate-y-0"
                 />
 
                 {/* //navigate with productId */}
-                <Link
-                  href={{
-                    pathname: '/product-details',
-                    query: { id: product._id },
-                  }}
+                <button
+                  onClick={() => handleNavigateToProductDetails(product._id)}
                   className="absolute bottom-0 left-0 right-0 bg-orange-500 text-white py-2 text-center font-medium transform translate-y-full transition-transform duration-300 group-hover:translate-y-0"
                 >
                   Quick overview
-                </Link>
+                </button>
 
               </div>
             </div>
 
             {/* Product Info */}
             <div className="p-4">
-              <h3 className="text-lg font-medium mb-2">{product.name}</h3>
+              <h3 className="text-lg font-medium mb-2">{product.name.slice(0, product.name.length - (product.name.length - 53)) + '...'}</h3>
 
               {/* Rating */}
               <div className="flex gap-1 mb-2">
