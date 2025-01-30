@@ -221,7 +221,12 @@ export default function BlogPage() {
                     {/* <Calendar className="w-4 h-4" />
                     {String(blog.createdAt)} */}
                   </div>
-                  <p className="text-gray-600 mb-4">{blog?.content}</p>
+                  <p
+                    className="text-gray-600 mb-4"
+                    dangerouslySetInnerHTML={{ __html: blog?.content }}
+                  >
+
+                  </p>
                   <div className="flex items-center gap-4 text-sm text-gray-500">
                     {blog?.comments &&
                       <Link href="#" className="hover:text-primary">
