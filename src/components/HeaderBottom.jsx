@@ -180,6 +180,10 @@ export const HeaderBottom = () => {
     },
   ]
 
+  const sortedCategories = categories.sort((a, b) => a.name.localeCompare(b.name));
+
+
+
   const menuItems = [
     {
       name: 'Home',
@@ -269,7 +273,7 @@ export const HeaderBottom = () => {
                     <AccordionTrigger className="px-4">All Categories</AccordionTrigger>
                     <AccordionContent className="pb-4">
                       <div className="space-y-1">
-                        {categories.map((category) => (
+                        {sortedCategories.map((category) => (
                           <Accordion
                             key={category.id}
                             type="single"
@@ -393,7 +397,7 @@ export const HeaderBottom = () => {
             {isVerticalMenuOpen && (
               <div className="absolute z-50 w-full bg-white text-gray-800 shadow-lg">
                 <div className="py-2">
-                  {categories.map((category) => (
+                  {sortedCategories.map((category) => (
                     <div key={category.id} className="group relative border-none last:border-b-0 hover:bg-[#f4a137]">
                       <Link
                         href="#"
