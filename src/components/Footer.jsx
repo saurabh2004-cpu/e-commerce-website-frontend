@@ -11,7 +11,7 @@ export default function Footer() {
     'Contact Us': [
       {
         icon: MapPin,
-        text: 'Home Shoppr india'
+        text: 'Home Shoppr India'
       },
       {
         icon: Mail,
@@ -19,7 +19,7 @@ export default function Footer() {
       },
       {
         icon: Phone,
-        text: 'Phone +91: 9336768443'
+        text: 'Phone +91 9336768443'
       }
     ]
   }

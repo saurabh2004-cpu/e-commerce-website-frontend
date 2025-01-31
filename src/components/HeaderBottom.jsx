@@ -208,11 +208,11 @@ export const HeaderBottom = () => {
       content: [
         {
           title: 'homeshoppr247@gmail.com',
-          icon: 'Mail@: '
+          icon: 'Mail: '
 
         },
         {
-          title: '+919336768443',
+          title: '+91 9336768443',
           icon: <Phone className='h-5 w-5' />
         }
       ]

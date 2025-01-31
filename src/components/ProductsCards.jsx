@@ -167,13 +167,16 @@ export default function ProductGrid({ title = "NEW PRODUCTS" }) {
 
               {/* Price */}
               <div className="flex items-center gap-2 mb-4">
-                <span className="text-xl text-red-500">₹{product.sellingPrice.toFixed(2)}</span>
+                <span className="text-xl text-red-500">
+                  ₹{Number(product.sellingPrice.toFixed(2)).toLocaleString('en-IN')}
+                </span>
                 {product.sellingPrice && (
                   <span className="text-gray-400 line-through">
-                    ₹{product.originalPrice.toFixed(2)}
+                    ₹{Number(product.originalPrice.toFixed(2)).toLocaleString('en-IN')}
                   </span>
                 )}
               </div>
+
 
               {/* Action Buttons */}
               <div className="flex gap-2">

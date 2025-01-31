@@ -65,12 +65,12 @@ export const HeaderCenter = () => {
           },
         }
       )
-      console.log("searched", response.data.data)
+      console.log("searched", response.data.data[0])
 
       if (response.data.statusCode === 200) {
         setProduct(response.data.data[0])
         setSearchTerm("")
-        router.push(`/product-details?id=${product?._id}`);
+        router.push(`/product-details?id=${response.data.data[0]._id}`);
       }
 
     } catch (error) {

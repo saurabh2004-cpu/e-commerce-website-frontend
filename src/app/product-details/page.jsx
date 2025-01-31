@@ -12,37 +12,30 @@ import { host } from '../../lib/host.js'
 
 
 export default function BlogDetailsPage() {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <ProductDetails />
-    </Suspense>
-  );
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <ProductDetails />
+        </Suspense>
+    );
 }
 
 
- function ProductDetails() {
-   
+function ProductDetails() {
+
 
     const [error, setError] = useState()
     const [product, setProduct] = useState()
-    const [productId, setProductId] = useState()
     const router = useRouter();
 
     //get product id from url
     const searchParams = useSearchParams();
-    const id = searchParams.get('id');
-
-    useEffect(() => {
-        if (id) {
-            setProductId(id)
-        }
-    }, [id])
+    const productId = searchParams.get('id');
 
 
     //calculate product discount
     const calculateDiscount = (originalPrice, discount) => {
         const discountAmount = (originalPrice * discount) / 100
-        return discountAmount.toFixed(2)
+        return discountAmount.toFixed(2).toLocaleString('en-IN')
     }
 
 
@@ -60,7 +53,7 @@ export default function BlogDetailsPage() {
 
 
             if (response.data.statusCode === 200) {
-                // console.log("product", response.data)
+                console.log("product", response.data)
                 setProduct(response.data.data)
             }
         } catch (error) {
@@ -75,10 +68,10 @@ export default function BlogDetailsPage() {
         if (productId) {
             fetchProduct()
         }
-        
+
     }, [productId])
 
-    const handleAffiliateLink= (url) => {
+    const handleAffiliateLink = (url) => {
         window.open(url, "_blank")
     }
 
@@ -130,12 +123,18 @@ export default function BlogDetailsPage() {
 
                     {/* Price */}
                     <div className="mb-8">
-                        {/* <span className="text-3xl font-bold">{productDiscountedPrice}</span> */}
-                        <span className="text-3xl font-bold">{product.sellingPrice}</span>
-                        <span className="text-gray-500 line-through ml-2">{product?.originalPrice}</span>
+                        <span className="text-3xl font-bold">
+                            ₹{Number(product.sellingPrice).toLocaleString('en-IN')}
+                        </span>
+                        <span className="text-gray-500 line-through ml-2">
+                            ₹{Number(product?.originalPrice).toLocaleString('en-IN')}
+                        </span>
                         <span className="text-green-500 font-semibold ml-2">17% off</span>
-                        <span className="text-gray-500  ml-2">{calculateDiscount(product?.originalPrice, 17)} off</span>
+                        <span className="text-gray-500 ml-2">
+                            ₹{Number(calculateDiscount(product?.originalPrice, 17)).toLocaleString('en-IN')} off
+                        </span>
                     </div>
+
 
 
                     {/* About This Item */}
@@ -147,9 +146,9 @@ export default function BlogDetailsPage() {
                             See more product details
                         </button>
                     </div>
-                    <button 
-                    className="bg-black text-white p-2 mt-4 hover:bg-gray-800"
-                    onClick={()=>handleAffiliateLink(product?.affiliateLink)}
+                    <button
+                        className="bg-black text-white p-2 mt-4 hover:bg-gray-800"
+                        onClick={() => handleAffiliateLink(product?.affiliateLink)}
                     >
                         BUY ON AMAZON
                     </button>
