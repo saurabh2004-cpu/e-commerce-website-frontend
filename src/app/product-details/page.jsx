@@ -5,9 +5,9 @@ import Link from 'next/link'
 import { ProductImages } from '../../components/ProductImages'
 import { ProductTabs } from '../../components/Product-tabs'
 import { RelatedProducts } from '../../components/RelatedProducts'
-import { Suspense, useEffect, useState } from 'react'
+import { Suspense, use, useEffect, useState } from 'react'
 import axios from 'axios'
-import { useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { host } from '../../lib/host.js'
 
 
@@ -26,6 +26,7 @@ export default function BlogDetailsPage() {
     const [error, setError] = useState()
     const [product, setProduct] = useState()
     const [productId, setProductId] = useState()
+    const router = useRouter();
 
     //get product id from url
     const searchParams = useSearchParams();
@@ -77,6 +78,10 @@ export default function BlogDetailsPage() {
         }
         
     }, [productId])
+
+    const handleAffiliateLink= (url) => {
+        window.open(url, "_blank")
+    }
 
     if (error) {
         return <div>{error.message}</div>
@@ -143,7 +148,10 @@ export default function BlogDetailsPage() {
                             See more product details
                         </button>
                     </div>
-                    <button className="bg-black text-white p-2 mt-4 hover:bg-gray-800 ">
+                    <button 
+                    className="bg-black text-white p-2 mt-4 hover:bg-gray-800"
+                    onClick={()=>handleAffiliateLink(product?.affiliateLink)}
+                    >
                         BUY ON AMAZON
                     </button>
 
