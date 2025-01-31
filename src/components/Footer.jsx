@@ -11,15 +11,15 @@ export default function Footer() {
     'Contact Us': [
       {
         icon: MapPin,
-        text: 'Home Shopper india'
+        text: 'Home Shoppr india'
       },
       {
         icon: Mail,
-        text: 'Email: homeshopper247@gmail.com'
+        text: 'Email: homeshoppr247@gmail.com'
       },
       {
         icon: Phone,
-        text: 'Phone +91: 9326768443'
+        text: 'Phone +91: 9336768443'
       }
     ]
   }

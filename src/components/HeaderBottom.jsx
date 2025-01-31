@@ -29,7 +29,7 @@ export const HeaderBottom = () => {
   const categories = [
     {
       id: 'automotive',
-      name: 'Automotive & Motorcycle',
+      name: 'Automotives & Motorcycles',
       icon: <Car className="h-5 w-5" />,
       hasSubmenu: true,
       submenu: {
@@ -67,7 +67,7 @@ export const HeaderBottom = () => {
     },
     {
       id: 'electronic',
-      name: 'Electronic',
+      name: 'Electronics',
       icon: <Tv className="h-5 w-5" />,
       hasSubmenu: false
     },
@@ -112,7 +112,7 @@ export const HeaderBottom = () => {
     },
     {
       id: 'health',
-      name: 'Health & Beauty',
+      name: 'Health & Beauties',
       icon: <Gift className="h-5 w-5" />,
       hasSubmenu: true,
       submenu: {
@@ -147,21 +147,7 @@ export const HeaderBottom = () => {
         ]
       }
     },
-    {
-      id: 'smartphone',
-      name: 'Smartphone & Tablets',
-      icon: <Smartphone className="h-5 w-5" />,
-      hasSubmenu: true,
-      submenu: {
-        links: [
-          'Headphones, Headsets',
-          'Home Audio',
-          'Health & Beauty',
-          'Helicopters & Parts',
-          'RC Helicopters'
-        ]
-      }
-    },
+    
     {
       id: 'flashlights',
       name: 'Flashlights & Lamps',
@@ -170,25 +156,25 @@ export const HeaderBottom = () => {
     },
     {
       id: 'camera',
-      name: 'Camera & Photo',
+      name: 'Cameras & Photos',
       icon: <Camera className="h-5 w-5" />,
       hasSubmenu: false
     },
     {
       id: 'mobile',
-      name: 'Smartphone & Tablets',
+      name: 'Smartphones & Tablets',
       icon: <Smartphone className="h-5 w-5" />,
       hasSubmenu: false
     },
     {
       id: 'outdoor',
-      name: 'Outdoor & Traveling Supplies',
+      name: 'Outdoors & Traveling Supplies',
       icon: <Plane className="h-5 w-5" />,
       hasSubmenu: false
     },
     {
       id: 'jewelry',
-      name: 'Jewelry & Watches',
+      name: 'Jewelries & Watches',
       icon: <Watch className="h-5 w-5" />,
       hasSubmenu: false
     },
@@ -217,12 +203,12 @@ export const HeaderBottom = () => {
       href: '/',
       content: [
         {
-          title: 'sales@yourcompany.com',
-          icon: 'Mail@ :'
+          title: 'homeshoppr247@gmail.com',
+          icon: 'Mail@: '
 
         },
         {
-          title: '+1234567890',
+          title: '+919336768443',
           icon: <Phone className='h-5 w-5' />
         }
       ]
