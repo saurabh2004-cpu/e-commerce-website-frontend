@@ -27,6 +27,8 @@ export const HeaderCenter = () => {
   const [product, setProduct] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const router = useRouter();
+
+
   //fetch categories
   const fetchCategories = async () => {
     try {
@@ -50,9 +52,10 @@ export const HeaderCenter = () => {
   }
 
   //search product by keyword or filter
-  const handleGetProductByKeywordOrFilter = async () => {
+  const handleGetProductByKeywordOrFilter = async (e) => {
     e.preventDefault()
     try {
+      // console.log("search",searchTerm)
 
       const response = await axios.get(`${host}/api/v1/products?search=${searchTerm}`,
         {
@@ -62,10 +65,10 @@ export const HeaderCenter = () => {
           },
         }
       )
-      // console.log("searched", response)
+      console.log("searched", response.data.dat)
 
       if (response.data.statusCode === 200) {
-        setProduct(response.data.data)
+        setProduct(response.data.data[0])
         setSearchTerm("")
         router.push(`/product-details?id=${product._id}`);
       }
