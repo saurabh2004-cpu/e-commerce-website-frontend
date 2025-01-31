@@ -43,7 +43,6 @@ export default function BlogDetailsPage() {
     const calculateDiscount = (originalPrice, discount) => {
         const discountAmount = (originalPrice * discount) / 100
         return discountAmount.toFixed(2)
-        // const discountedPrice = originalPrice - discountAmount
     }
 
 
@@ -61,7 +60,7 @@ export default function BlogDetailsPage() {
 
 
             if (response.data.statusCode === 200) {
-                console.log("product", response.data)
+                // console.log("product", response.data)
                 setProduct(response.data.data)
             }
         } catch (error) {
