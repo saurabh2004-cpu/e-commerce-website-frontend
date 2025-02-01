@@ -131,21 +131,17 @@ export default function ProductGrid({ title = "NEW PRODUCTS" }) {
                 src={product.thumbnail}
                 alt={product.name}
                 className="w-full h-[300px] object-cover transition-opacity duration-300 group-hover:opacity-0"
+                
               />
               <div className="absolute inset-0 flex flex-col items-center justify-end">
                 <img
                   src={product.images[0]}
                   alt={`${product.productDescriptionImage} - alternate view`}
                   className="w-full h-[300px] object-cover transform translate-y-full transition-transform duration-300 group-hover:translate-y-0"
+                  onClick={() => handleNavigateToProductDetails(product._id)}
                 />
 
-                {/* //navigate with productId */}
-                <button
-                  onClick={() => handleNavigateToProductDetails(product._id)}
-                  className="absolute bottom-0 left-0 right-0 bg-orange-500 text-white py-2 text-center font-medium transform translate-y-full transition-transform duration-300 group-hover:translate-y-0"
-                >
-                  Quick overview
-                </button>
+              
 
               </div>
             </div>
@@ -180,12 +176,7 @@ export default function ProductGrid({ title = "NEW PRODUCTS" }) {
 
               {/* Action Buttons */}
               <div className="flex gap-2">
-                <Button
-                  className="flex-1 bg-gray-800 hover:bg-orange-500 transition-colors"
-                  size="sm"
-                >
-                  ADD TO CART
-                </Button>
+                
                 <Button
                   variant="outline"
                   size="icon"

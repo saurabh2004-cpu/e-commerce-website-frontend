@@ -55,7 +55,7 @@ export const HeaderCenter = () => {
   const handleGetProductByKeywordOrFilter = async (e) => {
     e.preventDefault()
     try {
-      // console.log("search",searchTerm)
+      console.log("search",searchTerm)
 
       const response = await axios.get(`${host}/api/v1/products?search=${searchTerm}`,
         {
@@ -116,7 +116,10 @@ export const HeaderCenter = () => {
                   <SelectContent>
 
                     {allCategories.map((category) => (
-                      <SelectItem key={category._id} value={category.name} onClick={() => setCategory(category.name)}>
+                      <SelectItem
+                        key={category._id}
+                        value={category.name}
+                        onClick={() => setSearchTerm(category.name)}>
                         {category.name}
                       </SelectItem>
                     ))}

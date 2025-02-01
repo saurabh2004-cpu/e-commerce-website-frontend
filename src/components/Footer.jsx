@@ -19,7 +19,7 @@ export default function Footer() {
       },
       {
         icon: Phone,
-        text: 'Phone +91 9336768443'
+        text: 'Whatsapp +91 9336768443'
       }
     ]
   }

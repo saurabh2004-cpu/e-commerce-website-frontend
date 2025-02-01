@@ -21,7 +21,7 @@ import {
 } from "./ui/accordion"
 
 export const HeaderBottom = () => {
-  const [isVerticalMenuOpen, setIsVerticalMenuOpen] = useState(true)
+  const [isVerticalMenuOpen, setIsVerticalMenuOpen] = useState(false)
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
@@ -208,7 +208,7 @@ export const HeaderBottom = () => {
       content: [
         {
           title: 'homeshoppr247@gmail.com',
-          icon: 'Mail: '
+          icon: 'Mail:\u00A0\u00A0'
 
         },
         {
@@ -235,7 +235,7 @@ export const HeaderBottom = () => {
           <div className="grid block justify-start  gap-4">
             {item.content.map((section, idx) => (
               <div key={idx} className="space-y-4">
-                <div className="font-medium text-gray-900 flex"><span>{section.icon}</span><span className='hover:text-[#f4a137]'>{section.title}</span></div>
+                <div className="font-medium text-gray-900 flex"><span>{section.icon} </span><span className='hover:text-[#f4a137]'>{section.title}</span></div>
                 <ul className="space-y-2">
                 </ul>
               </div>
