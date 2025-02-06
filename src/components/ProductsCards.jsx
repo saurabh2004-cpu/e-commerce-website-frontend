@@ -177,20 +177,7 @@ export default function ProductGrid({ title = "NEW PRODUCTS" }) {
               {/* Action Buttons */}
               <div className="flex gap-2">
                 
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="hover:bg-orange-500 hover:text-white transition-colors"
-                >
-                  <Heart className="w-4 h-4" />
-                </Button>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="hover:bg-orange-500 hover:text-white transition-colors"
-                >
-                  <ArrowLeftRight className="w-4 h-4" />
-                </Button>
+                
               </div>
             </div>
           </div>

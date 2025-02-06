@@ -13,7 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../components/ui/select"
-import { use, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 
 import { host } from '../lib/host'
 import { useRouter } from "next/navigation"
@@ -22,7 +22,7 @@ import axios from "axios"
 
 export const HeaderCenter = () => {
   const [allCategories, setAllCategories] = useState([]);
-  const [category, setCategory] = useState("all");
+  const [category, setCategory] = useState("");
   const [error, setError] = useState(null);
   const [product, setProduct] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
@@ -42,7 +42,7 @@ export const HeaderCenter = () => {
       )
 
       if (response.status === 200) {
-        // console.log("categories",response)
+        console.log("categories", response)
         setAllCategories(response.data.data)
       }
     } catch (error) {
@@ -53,9 +53,10 @@ export const HeaderCenter = () => {
 
   //search product by keyword or filter
   const handleGetProductByKeywordOrFilter = async (e) => {
-    e.preventDefault()
+    e?.preventDefault()
     try {
-      console.log("search",searchTerm)
+
+      console.log("search", searchTerm)
 
       const response = await axios.get(`${host}/api/v1/products?search=${searchTerm}`,
         {
@@ -65,9 +66,10 @@ export const HeaderCenter = () => {
           },
         }
       )
-      console.log("searched", response.data.data[0])
+      console.log("searched", response)
 
-      if (response.data.statusCode === 200) {
+      if (response.data.statusCode === 200 && response.data.data.length > 0) {
+
         setProduct(response.data.data[0])
         setSearchTerm("")
         router.push(`/product-details?id=${response.data.data[0]._id}`);
@@ -106,36 +108,38 @@ export const HeaderCenter = () => {
           </div>
 
           {/* Search */}
-          <div className="w-full lg:w-2/4 ">
+          <div className="w-full lg:w-2/4">
             <form className="flex w-full" onSubmit={handleGetProductByKeywordOrFilter}>
-              <div className="relative flex w-full h-[36px] ">
-                <Select defaultValue="all">
+              <div className="relative flex w-full h-[36px]">
+                <Select value={category} onValueChange={(value) => {
+                  setCategory(value)
+                  setSearchTerm(value)
+                  handleGetProductByKeywordOrFilter()
+                }}>
                   <SelectTrigger className="w-[140px] sm:w-[180px] rounded-none bg-[#eeeeee]">
                     <SelectValue placeholder="All Categories" />
                   </SelectTrigger>
                   <SelectContent>
-
-                    {allCategories.map((category) => (
+                    {allCategories.map((cat) => (
                       <SelectItem
-                        key={category._id}
-                        value={category.name}
-                        onClick={() => setSearchTerm(category.name)}>
-                        {category.name}
+                        key={cat._id}
+                        value={cat.name}
+                      >
+                        {cat.name}
                       </SelectItem>
                     ))}
-
                   </SelectContent>
                 </Select>
                 <input
                   type="text"
                   placeholder="Search"
                   className="w-[140px] flex-1 px-4 py-2 border"
-                  value={searchTerm} // Bind input value to state
+                  value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
                 <Button
                   type="submit"
-                  className="px-6  hover:bg-[#f4a137]/90 text-white rounded-l-none"
+                  className="px-6 hover:bg-[#f4a137]/90 text-white rounded-l-none"
                 >
                   <Search className="h-5 w-5" />
                   <span className="sr-only">Search</span>

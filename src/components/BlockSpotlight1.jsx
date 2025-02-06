@@ -3,10 +3,12 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { ChevronLeft, ChevronRight, DollarSign, Truck, Calendar, Umbrella } from 'lucide-react';
-import { useEffect, useState,  } from 'react';
+import { useEffect, useState, } from 'react';
+import axios from 'axios';
+import { host } from '../lib/host';
 
 const topSearchKeywords = [
-  'Acer', 'APPLE', 'Black', 'Canon', 'Cogs', 'Confi', 'Kate', 'Lor', 'Product', 
+  'Acer', 'APPLE', 'Black', 'Canon', 'Cogs', 'Confi', 'Kate', 'Lor', 'Product',
   'Zolof The Rock And Roll Destroyer'
 ];
 
@@ -31,48 +33,78 @@ const sliderImages = [
   }
 ];
 
-const promotionalBanners = [
-  {
-    src: '/image/demo/cms/banner1.jpg?height=200&width=300',
-    alt: 'Watches up to 25% off',
-    title: 'WATCHES',
-    discount: '25% OFF'
-  },
-  {
-    src: '/image/demo/cms/banner2.jpg?height=200&width=300',
-    alt: 'Jewelry save 40% off',
-    title: 'JEWELRY',
-    discount: '40% OFF'
-  },
-  {
-    src: '/image/demo/cms/banner3.jpg?height=200&width=300',
-    alt: 'New Arrivals',
-    title: 'NEW ARRIVALS',
-    cta: 'BUY NOW'
-  }
-];
+// const promotionalBanners = [
+//   {
+//     src: '/image/demo/cms/banner1.jpg?height=200&width=300',
+//     alt: 'Watches up to 25% off',
+//     title: 'WATCHES',
+//     discount: '25% OFF'
+//   },
+//   {
+//     src: '/image/demo/cms/banner2.jpg?height=200&width=300',
+//     alt: 'Jewelry save 40% off',
+//     title: 'JEWELRY',
+//     discount: '40% OFF'
+//   },
+//   {
+//     src: '/image/demo/cms/banner3.jpg?height=200&width=300',
+//     alt: 'New Arrivals',
+//     title: 'NEW ARRIVALS',
+//     cta: 'BUY NOW'
+//   }
+// ];
 
-const features = [
-  
-  {
-    icon: <Truck className="h-6 w-6" />,
-    title: 'In-store',
-    subtitle: 'exchange'
-  },
-  {
-    icon: <Calendar className="h-6 w-6" />,
-    title: 'lowest price',
-    subtitle: 'guarantee'
-  },
-  {
-    icon: <Umbrella className="h-6 w-6" />,
-    title: 'shopping',
-    subtitle: 'guarantee'
-  }
-];
+// const features = [
+
+//   {
+//     icon: <Truck className="h-6 w-6" />,
+//     title: 'In-store',
+//     subtitle: 'exchange'
+//   },
+//   {
+//     icon: <Calendar className="h-6 w-6" />,
+//     title: 'lowest price',
+//     subtitle: 'guarantee'
+//   },
+//   {
+//     icon: <Umbrella className="h-6 w-6" />,
+//     title: 'shopping',
+//     subtitle: 'guarantee'
+//   }
+// ];
 
 export function BlockSpotLight1() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [banners, setBanners] = useState([])
+
+  //fetch banners
+  const fetchBanners = async () => {
+    try {
+      const response = await axios.get(`${host}/api/v1/banners/get`,
+        {
+          withCredentials: true,
+          headers: {
+            Accept: 'application/json',
+          },
+        },
+      )
+
+      if (response.data.statusCode === 200) {
+        // console.log("banners", response.data.data)
+        setBanners(response.data.data)
+      }
+
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  useEffect(() => {
+    fetchBanners()
+  }, [])
+
+
+
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -115,9 +147,8 @@ export function BlockSpotLight1() {
               {sliderImages.map((slide, index) => (
                 <div
                   key={index}
-                  className={`absolute inset-0 transition-opacity duration-500 ${
-                    currentSlide === index ? 'opacity-100' : 'opacity-0'
-                  }`}
+                  className={`absolute inset-0 transition-opacity duration-500 ${currentSlide === index ? 'opacity-100' : 'opacity-0'
+                    }`}
                 >
                   <Image
                     src={slide.src}
@@ -151,11 +182,11 @@ export function BlockSpotLight1() {
 
           {/* Right Side Banners */}
           <div className="md:col-span-4 grid gap-4 hidden sm:block">
-            {promotionalBanners.map((banner, index) => (
+            {banners && banners.map((image, index) => (
               <div key={index} className="relative h-[100px] md:h-[136px] overflow-hidden group">
                 <Image
-                  src={banner.src}
-                  alt={banner.alt}
+                  src={image.image}
+                  alt="banner Img"
                   fill
                   className="object-cover transition-transform duration-300 group-hover:scale-105"
                 />
@@ -164,7 +195,7 @@ export function BlockSpotLight1() {
           </div>
         </div>
 
-        
+
       </div>
     </section>
   );

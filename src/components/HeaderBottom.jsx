@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { ChevronDown, ChevronRight, Menu, Smartphone, Camera, Watch, Gift, Car, Tv, Gamepad, Lightbulb, Plane, Star, Instagram, Facebook, Twitter, Phone } from 'lucide-react'
@@ -19,171 +19,31 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "./ui/accordion"
+import axios from 'axios'
+import { host } from '../lib/host'
+import { usePathname, } from 'next/navigation'
 
 export const HeaderBottom = () => {
   const [isVerticalMenuOpen, setIsVerticalMenuOpen] = useState(false)
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [allCategories, setAllCategories] = useState([]);
+  const pathname = usePathname();
+
+  //set vertical menu open for only home page 
+  useEffect(() => {
+    // console.log("page", pathname)
+
+    if (pathname === '/') {
+      setIsVerticalMenuOpen(true)
+    } else {
+      setIsVerticalMenuOpen(false)
+    }
+
+  }, [pathname]);
 
 
-  const categories = [
-    {
-      id: 'automotive',
-      name: 'Automotives & Motorcycles',
-      icon: <Car className="h-5 w-5" />,
-      hasSubmenu: true,
-      submenu: {
-        columns: [
-          {
-            title: 'APPAREL',
-            links: [
-              'Accessories for Tablet PC',
-              'Accessories for i Pad',
-              'Accessories for iPhone',
-              'Bags, Holiday Supplies',
-              'Car Alarms and Security',
-              'Car Audio & Speakers'
-            ]
-          },
-          {
-            title: 'CABLES & CONNECTORS',
-            links: [
-              'Cameras & Photo',
-              'Electronics',
-              'Outdoor & Traveling'
-            ]
-          },
-          {
-            title: 'BAGS, HOLIDAY SUPPLIES',
-            links: [
-              'Battereries & Chargers',
-              'Bath & Body',
-              'Headphones, Headsets',
-              'Home Audio'
-            ]
-          }
-        ]
-      }
-    },
-    {
-      id: 'electronic',
-      name: 'Electronics',
-      icon: <Tv className="h-5 w-5" />,
-      hasSubmenu: false
-    },
-    {
-      id: 'sports',
-      name: 'Sports & Outdoors',
-      icon: <Gamepad className="h-5 w-5" />,
-      hasSubmenu: true,
-      submenu: {
-        columns: [
-          {
-            title: 'MOBILE ACCESSORIES',
-            links: [
-              'Gadgets & Auto Parts',
-              'Bath & Body',
-              'Bags, Holiday Supplies'
-            ]
-          },
-          {
-            title: 'BATTERERIES & CHARGERS',
-            links: [
-              'Outdoor & Traveling',
-              'Flashlights & Lamps',
-              'Fragrances'
-            ]
-          },
-          {
-            title: 'FISHING',
-            links: [
-              'FPV System & Parts',
-              'Electronics',
-              'Earings',
-              'More Car Accessories'
-            ]
-          }
-        ],
-        banner: {
-          image: '/image/demo/cms/menu_bg2.jpg?height=300&width=200',
-          title: 'Save an extra 30% on all 2014 Spring/Summer Clothing this weekend'
-        }
-      }
-    },
-    {
-      id: 'health',
-      name: 'Health & Beauties',
-      icon: <Gift className="h-5 w-5" />,
-      hasSubmenu: true,
-      submenu: {
-        columns: [
-          {
-            title: 'CAR ALARMS AND SECURITY',
-            links: [
-              'Car Audio & Speakers',
-              'Gadgets & Auto Parts',
-              'Gadgets & Auto Partss',
-              'Headphones, Headsets'
-            ]
-          },
-          {
-            title: 'ELECTRONICS',
-            links: [
-              'Earings',
-              'Salon & Spa Equipment',
-              'Shaving & Hair Removal',
-              'Smartphone & Tablets'
-            ]
-          },
-          {
-            title: 'MORE CAR ACCESSORIES',
-            links: [
-              'Lighter & Cigar Supplies',
-              'Mp3 Players & Accessories',
-              'Men Watches',
-              'Mobile Accessories'
-            ]
-          }
-        ]
-      }
-    },
-    
-    {
-      id: 'flashlights',
-      name: 'Flashlights & Lamps',
-      icon: <Lightbulb className="h-5 w-5" />,
-      hasSubmenu: false
-    },
-    {
-      id: 'camera',
-      name: 'Cameras & Photos',
-      icon: <Camera className="h-5 w-5" />,
-      hasSubmenu: false
-    },
-    {
-      id: 'mobile',
-      name: 'Smartphones & Tablets',
-      icon: <Smartphone className="h-5 w-5" />,
-      hasSubmenu: false
-    },
-    {
-      id: 'outdoor',
-      name: 'Outdoors & Traveling Supplies',
-      icon: <Plane className="h-5 w-5" />,
-      hasSubmenu: false
-    },
-    {
-      id: 'jewelry',
-      name: 'Jewelries & Watches',
-      icon: <Watch className="h-5 w-5" />,
-      hasSubmenu: false
-    },
-  ]
-
-  const sortedCategories = categories.sort((a, b) => a.name.localeCompare(b.name));
-
-
-
+  //horixontal menu
   const menuItems = [
     {
       name: 'Home',
@@ -225,7 +85,38 @@ export const HeaderBottom = () => {
   ]
 
 
+  //fetch categories and subcategories
+  const fetchCategoriesAndSubCategories = async () => {
+    try {
+      const response = await axios.get(`${host}/api/v1/categories/get/names`,
+        {
+          withCredentials: true,
+          headers: {
+            Accept: 'application/json',
+          },
+        }
+      )
 
+      if (response.status === 200) {
+        console.log("cate", response.data.data)
+        const sortedCategories = response.data.data.sort((a, b) => a.name.localeCompare(b.name));
+        setAllCategories(sortedCategories)
+
+      }
+    } catch (error) {
+      setError(error);
+      console.error(error)
+    }
+  }
+
+
+  useEffect(() => {
+    fetchCategoriesAndSubCategories();
+  }, []);
+
+
+
+  //contact us dropdown
   const renderDropdownContent = (item) => {
     if (!item) return null;
 
@@ -249,7 +140,7 @@ export const HeaderBottom = () => {
   };
 
 
-  
+
 
   return (
     <div className="w-full bg-[#444444] text-white px-4 lg:px-32 overflow-visible relative">
@@ -273,52 +164,42 @@ export const HeaderBottom = () => {
                     <AccordionTrigger className="px-4">All Categories</AccordionTrigger>
                     <AccordionContent className="pb-4">
                       <div className="space-y-1">
-                        {sortedCategories.map((category) => (
+                        {allCategories.map((category) => (
                           <Accordion
-                            key={category.id}
+                            key={category._id}
                             type="single"
                             collapsible
                             className="w-full"
                           >
-                            <AccordionItem value={category.id}>
-                              {category.hasSubmenu ? (
+                            <AccordionItem value={category._id}>
+                              {category.subCategories && category.subCategories.length > 0 ? (
                                 <>
                                   <AccordionTrigger className="px-4 py-2">
                                     <span className="flex items-center gap-2">
-                                      {category.icon}
                                       {category.name}
                                     </span>
                                   </AccordionTrigger>
                                   <AccordionContent>
                                     <div className="space-y-4 px-4">
-                                      {category.submenu.columns?.map((column, idx) => (
-                                        <div key={idx}>
-                                          <h4 className="mb-2 font-medium">{column.title}</h4>
-                                          <ul className="space-y-2">
-                                            {column.links.map((link, linkIdx) => (
-                                              <li key={linkIdx}>
-                                                <Link
-                                                  href="#"
-                                                  className="block text-sm text-muted-foreground hover:text-primary"
-                                                  onClick={() => setIsMobileMenuOpen(false)}
-                                                >
-                                                  {link}
-                                                </Link>
-                                              </li>
-                                            ))}
-                                          </ul>
-                                        </div>
+                                      {category.subCategories.map((subcategory, idx) => (
+                                        <Link
+                                          key={idx}
+                                          href={`/category/${subcategory.name}`}
+                                          className="block text-sm text-gray-700 hover:text-primary"
+                                          onClick={() => setIsMobileMenuOpen(false)}
+                                        >
+                                          {subcategory.name}
+                                        </Link>
                                       ))}
                                     </div>
                                   </AccordionContent>
                                 </>
                               ) : (
                                 <Link
-                                  href="#"
+                                  href={`/category/${category.name}`}
                                   className="flex items-center gap-2 px-4 py-2 text-sm hover:bg-accent"
                                   onClick={() => setIsMobileMenuOpen(false)}
                                 >
-                                  {category.icon}
                                   {category.name}
                                 </Link>
                               )}
@@ -397,68 +278,32 @@ export const HeaderBottom = () => {
             {isVerticalMenuOpen && (
               <div className="absolute z-50 w-full bg-white text-gray-800 shadow-lg">
                 <div className="py-2">
-                  {sortedCategories.map((category) => (
-                    <div key={category.id} className="group relative border-none last:border-b-0 hover:bg-[#f4a137]">
+                  {allCategories.map((category) => (
+                    <div key={category._id} className="group relative border-none last:border-b-0 hover:bg-[#f4a137]">
                       <Link
                         href="#"
-                        className="flex items-center justify-between px-4 py-4 my-2 border-none"
+                        className="flex items-center justify-between px-4 py-2 border-none"
                       >
                         <div className="flex items-center gap-3">
                           {category.icon}
                           <span className="text-sm">{category.name}</span>
                         </div>
-                        {category.hasSubmenu && (
+                        {category.subCategories && (
                           <ChevronRight className="h-4 w-4" />
                         )}
                       </Link>
-                      {category.hasSubmenu && (
-                        <div className="invisible absolute left-full top-0 min-h-full w-[700px] bg-white opacity-0 shadow-lg transition-all group-hover:visible group-hover:opacity-100">
-                          <div className="grid grid-cols-4 gap-4 p-4">
-                            {category.submenu.columns ? (
+                      {category.subCategories && (
+                        <div className="invisible absolute left-full top-0 min-h-full w-[500px] bg-white opacity-0 shadow-lg transition-all group-hover:visible group-hover:opacity-100">
+                          <div className="grid grid-cols-2 gap-2 p-4">
+                            {category.subCategories &&
                               <>
-                                {category.submenu.columns.map((column, idx) => (
-                                  <div key={idx} className="space-y-4">
-                                    <h4 className="font-medium text-[#444444]">{column.title}</h4>
-                                    <ul className="space-y-2">
-                                      {column.links.map((link) => (
-                                        <li key={link}>
-                                          <Link href="#" className="text-sm text-gray-600 hover:text-[#f4a137]">
-                                            {link}
-                                          </Link>
-                                        </li>
-                                      ))}
-                                    </ul>
+                                {category.subCategories.map((category, idx) => (
+                                  <div key={idx} className="">
+                                    <h4 className=" text-[#444444]">{category.name}</h4>
                                   </div>
                                 ))}
-                                {category.submenu.banner && (
-                                  <div className="col-span-1">
-                                    <div className="relative h-full w-full">
-                                      <Image
-                                        src={category.submenu.banner.image}
-                                        alt={category.submenu.banner.title}
-                                        fill
-                                        className="rounded-lg object-cover"
-                                      />
-                                      <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 p-2 text-white">
-                                        <p className="text-sm">{category.submenu.banner.title}</p>
-                                      </div>
-                                    </div>
-                                  </div>
-                                )}
                               </>
-                            ) : (
-                              <div className="col-span-4">
-                                <ul className="space-y-2">
-                                  {category.submenu.links.map((link) => (
-                                    <li key={link}>
-                                      <Link href="#" className="text-sm text-gray-600 hover:text-[#f4a137]">
-                                        {link}
-                                      </Link>
-                                    </li>
-                                  ))}
-                                </ul>
-                              </div>
-                            )}
+                            }
                           </div>
                         </div>
                       )}
@@ -472,10 +317,7 @@ export const HeaderBottom = () => {
           {/* Horizontal Main Menu */}
           <div className="flex-1 hidden sm:block">
             <nav className="h-full">
-
-
               <ul className="flex h-full">
-
                 {/* left side nav items  */}
                 {menuItems.map((item) => (
                   <li
