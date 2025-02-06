@@ -1,13 +1,12 @@
 'use client'
 
 import { Heart, ArrowLeftRight, Star } from 'lucide-react'
-import { Button } from '../components/ui/button'
 import { useState } from 'react'
 import axios from 'axios'
 import { host } from '../lib/host'
 import { useRouter } from 'next/navigation'
 
-export default function ProductGrid({ title = "NEW PRODUCTS" }) {
+export default function ProductGrid({ title = "NEW PRODUCTS", propProducts = [] }) {
   // const products = [
   //   {
   //     id: 1,
@@ -83,7 +82,11 @@ export default function ProductGrid({ title = "NEW PRODUCTS" }) {
   }
 
   useState(() => {
-    fetchAllProducts()
+
+    if (!propProducts.length > 0) {
+      fetchAllProducts()
+    }
+    setProducts(propProducts)
   }, [])
 
 
@@ -97,16 +100,6 @@ export default function ProductGrid({ title = "NEW PRODUCTS" }) {
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
         <h2 className="text-2xl font-semibold">{title}</h2>
-        <div className="flex flex-wrap justify-center md:justify-end gap-4">
-          {categories.map((category) => (
-            <button
-              key={category}
-              className="text-sm text-gray-600 hover:text-orange-500 transition-colors"
-            >
-              {category}
-            </button>
-          ))}
-        </div>
       </div>
 
       {/* Product Grid */}
@@ -116,7 +109,6 @@ export default function ProductGrid({ title = "NEW PRODUCTS" }) {
             {/* Product Images with Hover Effect */}
             <div className="relative overflow-hidden">
               {/* Discount/New Badge */}
-
               <span className="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 rounded-md text-sm z-10">
                 17%
               </span>
@@ -131,7 +123,7 @@ export default function ProductGrid({ title = "NEW PRODUCTS" }) {
                 src={product.thumbnail}
                 alt={product.name}
                 className="w-full h-[300px] object-cover transition-opacity duration-300 group-hover:opacity-0"
-                
+
               />
               <div className="absolute inset-0 flex flex-col items-center justify-end">
                 <img
@@ -140,26 +132,12 @@ export default function ProductGrid({ title = "NEW PRODUCTS" }) {
                   className="w-full h-[300px] object-cover transform translate-y-full transition-transform duration-300 group-hover:translate-y-0"
                   onClick={() => handleNavigateToProductDetails(product._id)}
                 />
-
-              
-
               </div>
             </div>
 
             {/* Product Info */}
-            <div className="p-4">
+            <div className="p-2">
               <h3 className="text-lg font-medium mb-2">{product.name.slice(0, product.name.length - (product.name.length - 53)) + '...'}</h3>
-
-              {/* Rating */}
-              <div className="flex gap-1 mb-2">
-                {[...Array(5)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className={`w-4 h-4 ${i < product.rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300'
-                      }`}
-                  />
-                ))}
-              </div>
 
               {/* Price */}
               <div className="flex items-center gap-2 mb-4">
@@ -176,8 +154,8 @@ export default function ProductGrid({ title = "NEW PRODUCTS" }) {
 
               {/* Action Buttons */}
               <div className="flex gap-2">
-                
-                
+
+
               </div>
             </div>
           </div>

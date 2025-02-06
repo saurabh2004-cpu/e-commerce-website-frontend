@@ -122,28 +122,13 @@ export function BlockSpotLight1() {
   };
 
   return (
-    <section className="w-full bg-white px-2 sm:px-32 sm:pl-[400px] py-6">
+    <section className="w-full bg-white px-2 sm:px-32 sm:pl-[400px] ">
       <div className="container mx-auto">
-        {/* Top Search Keywords */}
-        <div className="mb-6">
-          <div className="flex flex-wrap items-center gap-2">
-            <h5 className="font-medium">Top Search:</h5>
-            <ul className="flex flex-wrap gap-2 overflow-x-auto">
-              {topSearchKeywords.map((keyword, index) => (
-                <li key={index}>
-                  <Link href="#" className="text-sm text-gray-600 hover:text-[#f4a137]">
-                    {keyword}{index < topSearchKeywords.length - 1 ? ',' : ''}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
           {/* Main Slider */}
           <div className="md:col-span-8 relative">
-            <div className="relative h-[300px] md:h-[410px] overflow-hidden">
+            <div className="relative h-[300px] md:h-[510px] overflow-hidden">
               {sliderImages.map((slide, index) => (
                 <div
                   key={index}
@@ -183,7 +168,7 @@ export function BlockSpotLight1() {
           {/* Right Side Banners */}
           <div className="md:col-span-4 grid gap-4 hidden sm:block">
             {banners && banners.map((image, index) => (
-              <div key={index} className="relative h-[100px] md:h-[136px] overflow-hidden group">
+              <div key={index} className="relative h-[100px] md:h-[170px] overflow-hidden group">
                 <Image
                   src={image.image}
                   alt="banner Img"

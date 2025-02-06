@@ -3,11 +3,21 @@
 import { MapPin, Mail, Phone } from 'lucide-react'
 
 export default function Footer() {
-  
   const mainSections = {
-    
-    'Others': ['Brands', 'Privacy Policy', 'Terms & Conditions', 'Promotions', 'Collaborations'],
-    'My Account': ['Brands', 'Affiliates', 'Specials', 'Our Blog','Promotions'],
+    'Others': [
+      { name: 'Brands', url: '/' },
+      { name: 'Privacy Policy', url: '/' },
+      { name: 'Terms & Conditions', url: '/' },
+      { name: 'Promotions', url: '/' },
+      { name: 'Collaborations', url: '/collaboration' }
+    ],
+    'My Account': [
+      { name: 'Brands', url: '/' },
+      { name: 'Affiliates', url: '/' },
+      { name: 'Specials', url: '/' },
+      { name: 'Our Blog', url: '/blogs' },
+      { name: 'Promotions', url: '/' }
+    ],
     'Contact Us': [
       {
         icon: MapPin,
@@ -47,13 +57,13 @@ export default function Footer() {
               <ul className="space-y-2">
                 {items.map((item, index) => (
                   <li key={index}>
-                    {typeof item === 'string' ? (
+                    {item.url ? (
                       <a
-                        href="#"
+                        href={item.url}
                         className="text-gray-600 hover:text-orange-500 transition-colors inline-flex items-center group"
                       >
                         <span className="transform group-hover:translate-x-1 transition-transform">
-                          {item}
+                          {item.name}
                         </span>
                       </a>
                     ) : (
@@ -108,4 +118,3 @@ export default function Footer() {
     </footer>
   )
 }
-

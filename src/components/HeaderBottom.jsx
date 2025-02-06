@@ -28,6 +28,7 @@ export const HeaderBottom = () => {
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [allCategories, setAllCategories] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
   const pathname = usePathname();
 
   //set vertical menu open for only home page 
@@ -115,6 +116,31 @@ export const HeaderBottom = () => {
   }, []);
 
 
+  //search product by category
+  const handleGetProductsByCategory = async (category) => {
+    try {
+
+      console.log("searchTerm category", category)
+
+      const response = await axios.get(`${host}/api/v1/products?search=${category}`,
+        {
+          withCredentials: true,
+          headers: {
+            Accept: 'application/json',
+          },
+        }
+      )
+      console.log("searched", response.data)
+
+      if (response.data.statusCode === 200 && response.data.data.length > 0) {
+        setSearchTerm("")
+        router.push(`/products?category=${category}&products=${response.data.data}`);
+      }
+
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   //contact us dropdown
   const renderDropdownContent = (item) => {
@@ -175,7 +201,13 @@ export const HeaderBottom = () => {
                               {category.subCategories && category.subCategories.length > 0 ? (
                                 <>
                                   <AccordionTrigger className="px-4 py-2">
-                                    <span className="flex items-center gap-2">
+                                    <span
+                                      className="flex items-center gap-2"
+                                      onClick={() => {
+                                        handleGetProductsByCategory(category.name)
+                                        setSearchTerm(category.name)
+                                      }}
+                                    >
                                       {category.name}
                                     </span>
                                   </AccordionTrigger>
@@ -280,9 +312,13 @@ export const HeaderBottom = () => {
                 <div className="py-2">
                   {allCategories.map((category) => (
                     <div key={category._id} className="group relative border-none last:border-b-0 hover:bg-[#f4a137]">
-                      <Link
+                      <button
                         href="#"
                         className="flex items-center justify-between px-4 py-2 border-none"
+                        onClick={(e) => {
+                          setSearchTerm(category.name)
+                          handleGetProductsByCategory(category.name)
+                        }}
                       >
                         <div className="flex items-center gap-3">
                           {category.icon}
@@ -291,7 +327,7 @@ export const HeaderBottom = () => {
                         {category.subCategories && (
                           <ChevronRight className="h-4 w-4" />
                         )}
-                      </Link>
+                      </button>
                       {category.subCategories && (
                         <div className="invisible absolute left-full top-0 min-h-full w-[500px] bg-white opacity-0 shadow-lg transition-all group-hover:visible group-hover:opacity-100">
                           <div className="grid grid-cols-2 gap-2 p-4">

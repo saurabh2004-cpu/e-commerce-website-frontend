@@ -73,6 +73,9 @@ export const HeaderCenter = () => {
         setProduct(response.data.data[0])
         setSearchTerm("")
         router.push(`/product-details?id=${response.data.data[0]._id}`);
+
+      } else if (response.data.statusCode === 200 && response.data.data.length > 1) {
+        router.push(`/products?category=${category}&products=${response.data.data}`);
       }
 
     } catch (error) {

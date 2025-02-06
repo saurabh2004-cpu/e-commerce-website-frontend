@@ -132,22 +132,7 @@ export default function BlogDetailsPage() {
 
         {/* Left Sidebar */}
         <aside className="lg:col-span-1">
-          {/* Blog Categories */}
-          <div className="mb-8">
-            <h3 className="text-xl font-semibold mb-4 pb-2 border-b">Blog Category</h3>
-            <ul className="space-y-2">
-              {categories.map((category, index) => (
-                <li key={index}>
-                  <Link
-                    href="#"
-                    className={`block p-2 rounded transition-colors hover:text-[#f4a137]`}
-                  >
-                    {category}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+         
 
           {/* Latest Products */}
           <div>
@@ -207,7 +192,7 @@ export default function BlogDetailsPage() {
             onClick={() => setShowLightbox(true)}
           >
             <Image
-              src={blog.detailImage}
+              src={blog?.detailImage}
               alt="blog-img"
               fill
               className="object-cover"

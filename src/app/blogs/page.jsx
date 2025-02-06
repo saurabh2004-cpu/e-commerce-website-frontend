@@ -6,94 +6,69 @@ import { Home, Star } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { host } from '../../lib/host.js'
+import { set } from 'zod'
 
 
 
 export default function BlogPage() {
 
-  // categories
-  const categories = [
-    "Our Blog",
-    "Demo Category 2",
-    "Demo Category 3",
-    "Demo Category 4",
-    "Demo Category 5"
-  ]
-
-  const latestProducts = [
-    {
-      id: 1,
-      name: "Sunt Molup",
-      price: 100.00,
-      image: "/image/demo/shop/product/m1.jpg?height=82&width=100",
-      rating: 5
-    },
-    {
-      id: 2,
-      name: "Et Spare",
-      price: 99.00,
-      image: "/image/demo/shop/product/m2.jpg?height=82&width=100",
-      rating: 4
-    },
-    {
-      id: 3,
-      name: "Cisi Chicken",
-      price: 59.00,
-      image: "/image/demo/shop/product/18.jpg?height=82&width=100",
-      rating: 4
-    },
-    {
-      id: 4,
-      name: "Kevin Labor",
-      price: 245.00,
-      image: "/image/demo/shop/product/9.jpg?height=82&width=100",
-      rating: 4
-    }
-  ]
-
-  const blogPosts = [
-    {
-      id: 1,
-      title: "Kire Tuma Demonstraverunt Lector",
-      date: "Tue, Feb 16, 2016",
-      image: "/image/demo/blog/blog4.jpg?height=300&width=400",
-      description: "Morbi tempus, non ullamcorper euismod, erat odio suscipit purus, nec ornare lacus turpis ac purus. Mauris cursus in mi vel dignissim. Morbi mollis elit ipsum, a feugiat lectus gravida non.",
-      comments: 0,
-      author: "Admin"
-    },
-    {
-      id: 2,
-      title: "Ac Tincidunt Suspendisse Malesuada",
-      date: "Tue, Feb 16, 2016",
-      image: "/image/demo/blog/blog5.jpg?height=300&width=400",
-      description: "Morbi tempus, non ullamcorper euismod, erat odio suscipit purus, nec ornare lacus turpis ac purus. Mauris cursus in mi vel dignissim. Morbi mollis elit ipsum, a feugiat lectus gravida non.",
-      comments: 0,
-      author: "Admin"
-    },
-    {
-      id: 3,
-      title: "Nire Tmas Kite Traverunt Lector Legere Legunt",
-      date: "Tue, Feb 16, 2016",
-      image: "/image/demo/blog/blog6.jpg?height=300&width=400",
-      description: "Morbi tempus, non ullamcorper euismod, erat odio suscipit purus, nec ornare lacus turpis ac purus. Mauris cursus in mi vel dignissim. Morbi mollis elit ipsum, a feugiat lectus gravida non.",
-      comments: 0,
-      author: "Admin"
-    },
-    {
-      id: 4,
-      title: "Neque Porro Quisquam Est, Qui Dolorem Ipsum",
-      date: "Tue, Feb 16, 2016",
-      image: "/image/demo/blog/blog1.jpg?height=300&width=400",
-      description: "Morbi tempus, non ullamcorper euismod, erat odio suscipit purus, nec ornare lacus turpis ac purus. Mauris cursus in mi vel dignissim. Morbi mollis elit ipsum, a feugiat lectus gravida non. Aenean molestie justo sed aliquam euismod. Maecenas laoreet",
-      comments: 0,
-      author: "Admin"
-    },
-  ]
+  // const latestProducts = [
+  //   {
+  //     id: 1,
+  //     name: "Sunt Molup",
+  //     price: 100.00,
+  //     image: "/image/demo/shop/product/m1.jpg?height=82&width=100",
+  //     rating: 5
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Et Spare",
+  //     price: 99.00,
+  //     image: "/image/demo/shop/product/m2.jpg?height=82&width=100",
+  //     rating: 4
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "Cisi Chicken",
+  //     price: 59.00,
+  //     image: "/image/demo/shop/product/18.jpg?height=82&width=100",
+  //     rating: 4
+  //   },
+  //   {
+  //     id: 4,
+  //     name: "Kevin Labor",
+  //     price: 245.00,
+  //     image: "/image/demo/shop/product/9.jpg?height=82&width=100",
+  //     rating: 4
+  //   }
+  // ]
 
   const [allBlogs, setAllBlogs] = useState([])
+  const [latestProducts, setLatestProducts] = useState([])
+  const [pageNo, setPageNo] = useState(1)
+
+  //fetch products Get all products
+  const fetchAllProducts = async () => {
+    try {
+      const response = await axios.get(`${host}/api/v1/products/get/all`,
+        {
+          withCredentials: true,
+          headers: {
+            Accept: 'application/json',
+          },
+        },
+      )
+      // console.log("object", response)
+
+      if (response.data.statusCode === 200) {
+        setLatestProducts(response.data.data.splice(0, 4))
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   //fetch all blogs
-
   const fetchBlogs = async () => {
     try {
       const response = await axios.get(`${host}/api/v1/blogs/get/all`,
@@ -116,23 +91,10 @@ export default function BlogPage() {
 
   useEffect(() => {
     fetchBlogs()
+    fetchAllProducts()
   }, [])
 
-  const renderRating = (rating) => {
-    return (
-      <div className="flex gap-0.5">
-        {[...Array(5)].map((_, index) => (
-          <span key={index}>
-            {index < rating ? (
-              <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-            ) : (
-              <Star className="w-4 h-4 text-gray-300" />
-            )}
-          </span>
-        ))}
-      </div>
-    )
-  }
+  if(!allBlogs.length>0 && !latestProducts.length) return <div>Loading...</div>
 
   return (
     <div className="container mx-auto px-4 md:px-32 py-8">
@@ -149,43 +111,25 @@ export default function BlogPage() {
 
         {/* Left Sidebar */}
         <aside className="lg:col-span-1">
-          {/* Blog Categories */}
-          <div className="mb-8">
-            <h3 className="text-xl font-semibold mb-4 pb-2 border-b">Blog Category</h3>
-            <ul className="space-y-2">
-              {categories.map((category, index) => (
-                <li key={index}>
-                  <Link
-                    href="#"
-                    className={`block p-2 rounded transition-colors hover:text-[#f4a137]`}
-                  >
-                    {category}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
           {/* Latest Products */}
           <div>
             <h3 className="text-xl font-semibold mb-4 pb-2 border-b">Latest Product</h3>
             <div className="space-y-4">
               {latestProducts.map((product) => (
-                <div key={product.id} className="flex gap-4 group">
+                <div key={product._id} className="flex gap-4 group">
                   <div className="relative w-24 h-20 overflow-hidden">
                     <Image
-                      src={product.image}
-                      alt={product.name}
+                      src={product.thumbnail}
+                      alt='product-img'
                       fill
                       className="object-cover border border-transparent hover:border-[#f4a137] transition-all "
                     />
                   </div>
                   <div>
                     <h4 className="font-medium hover:text-primary">
-                      <Link href="#">{product.name}</Link>
+                      <Link href={`/product-details?id=${product._id}`}>{product.name.slice(0, product.name.length - (product.name.length - 53)) + '...'}</Link>
                     </h4>
-                    <p className="text-primary font-semibold">${product.price.toFixed(2)}</p>
-                    {renderRating(product.rating)}
+                    <p className="text-primary font-semibold">${product.sellingPrice.toFixed(2).toLocaleString('en-IN')}</p>
                   </div>
                 </div>
               ))}
@@ -242,16 +186,33 @@ export default function BlogPage() {
 
           {/* Pagination */}
           <div className="flex justify-left gap-2 mt-12">
-            <button className="w-8 h-8 flex items-center justify-center rounded bg-primary text-white">
+          {pageNo > 1 && <button
+              className=
+              "w-8 h-8 flex items-center justify-center rounded hover:bg-gray-100"
+              onClick={() => setPageNo(pageNo - 1)}
+            >
+              | &lt;
+            </button>}
+            <button
+              className={`w-8 h-8 flex items-center justify-center rounded ${pageNo === 1 ? 'bg-primary text-secondary' : ''} text-black`}
+              onClick={() => setPageNo(1)}
+            >
               1
             </button>
-            <button className="w-8 h-8 flex items-center justify-center rounded hover:bg-gray-100">
+            <button
+              className={`w-8 h-8 flex items-center justify-center rounded ${pageNo === 2 ? 'bg-primary text-secondary' : ''} text-black`}
+              onClick={() => setPageNo(2)}
+            >
               2
             </button>
-            <button className="w-8 h-8 flex items-center justify-center rounded hover:bg-gray-100">
-              3;
-            </button>
-            <button className="w-8 h-8 flex items-center justify-center rounded hover:bg-gray-100">
+            {pageNo > 2 && <button className="w-8 h-8 flex items-center justify-center rounded hover:bg-gray-100 bg-primary text-secondary">
+              {pageNo ||  '...'}
+            </button>}
+            <button
+              className=
+              "w-8 h-8 flex items-center justify-center rounded hover:bg-gray-100"
+              onClick={() => setPageNo(pageNo + 1)}
+            >
               &gt;|
             </button>
           </div>
