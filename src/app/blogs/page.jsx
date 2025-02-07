@@ -149,9 +149,10 @@ export default function BlogPage() {
               <article key={blog._id} className="grid md:grid-cols-3 gap-6">
                 <div className="relative h-60 md:h-full overflow-hidden group">
                   <Image
-                    src={blog.thumbnail}
+                    src={blog.detailImage}
                     alt='blog-img'
-                    fill
+                    height={600}
+                    width={800}
                     className="object-cover transition-transform duration-500 group-hover:scale-110"
                   />
                 </div>

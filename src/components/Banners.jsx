@@ -1,37 +1,69 @@
 'use client'
 
+import axios from "axios"
+import { useEffect, useState } from "react"
+import { host } from "../lib/host"
+
 
 export default function Banners() {
-  const banners = [
-    {
-      title: "SKI ACCESSORIES",
-      subtitle: "Duis autem vel eum irure dolor in hendrerit in vulputate",
-      buttonText: "SHOP NOW",
-      image: "/image/demo/cms/banner2-1.png?height=400&width=600&text=Ski+Accessories",
-      type: "large"
-    },
-    {
-      title: "SPRING SUMMER",
-      subtitle: "TOP SELLERS",
-      highlight: "50% OFF",
-      image: "/image/demo/cms/banner2-2.png?height=200&width=600&text=Spring+Summer",
-      type: "small"
-    },
-    {
-      title: "SAVE",
-      subtitle: "ON DISPLAY MODEL TABLETS",
-      highlight: "UP TO 60%",
-      image: "/image/demo/cms/banner2-3.png?height=200&width=600&text=Tablets",
-      type: "small"
-    },
-    {
-      title: "IPOD & MP3",
-      subtitle: "CHOOSE STYLISH WAYS TO PROTECT YOUR IPOD",
-      image: "/image/demo/cms/banner2-4.png?height=400&width=600&text=iPod",
-      type: "large"
+  // const banners = [
+  //   {
+  //     title: "SKI ACCESSORIES",
+  //     subtitle: "Duis autem vel eum irure dolor in hendrerit in vulputate",
+  //     buttonText: "SHOP NOW",
+  //     image: "/image/demo/cms/banner2-1.png?height=400&width=600&text=Ski+Accessories",
+  //     type: "large"
+  //   },
+  //   {
+  //     title: "SPRING SUMMER",
+  //     subtitle: "TOP SELLERS",
+  //     highlight: "50% OFF",
+  //     image: "/image/demo/cms/banner2-2.png?height=200&width=600&text=Spring+Summer",
+  //     type: "small"
+  //   },
+  //   {
+  //     title: "SAVE",
+  //     subtitle: "ON DISPLAY MODEL TABLETS",
+  //     highlight: "UP TO 60%",
+  //     image: "/image/demo/cms/banner2-3.png?height=200&width=600&text=Tablets",
+  //     type: "small"
+  //   },
+  //   {
+  //     title: "IPOD & MP3",
+  //     subtitle: "CHOOSE STYLISH WAYS TO PROTECT YOUR IPOD",
+  //     image: "/image/demo/cms/banner2-4.png?height=400&width=600&text=iPod",
+  //     type: "large"
+  //   }
+  // ]
+
+  const [banners, setBanners] = useState([])
+
+  const fetchBanners = async () => {
+    try {
+      const response = await axios.get(`${host}/api/v1/banners/get`, {
+        withCredentials: true,
+        headers: {
+          Accept: 'application/json',
+        }
+      })
+
+      console.log("respose banners", response)
+
+      if (response.data.statusCode === 200) {
+        setBanners(response.data.data)
+      }
+    } catch (error) {
+      console.error(error)
     }
-  ]
- 
+  }
+
+
+  useEffect(() => {
+    fetchBanners()
+  })
+
+
+
   return (
     <div className="container mx-auto p-4 p-6 sm:px-32">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -40,7 +72,7 @@ export default function Banners() {
           <a href="#" className="block relative">
             <img
               src={banners[0]?.image}
-              alt={banners[0]?.title}
+              alt='banner-img'
               className="w-full h-full object-cover"
             />
             {/* Hover Overlay */}
@@ -65,7 +97,7 @@ export default function Banners() {
               <a href="#" className="block relative h-full">
                 <img
                   src={banner?.image}
-                  alt={banner?.title}
+                  alt='banner-img'
                   className="w-full h-full object-cover"
                 />
                 {/* Hover Overlay */}
@@ -86,7 +118,7 @@ export default function Banners() {
           <a href="#" className="block relative">
             <img
               src={banners[3]?.image}
-              alt={banners[3]?.title}
+              alt='banner-img'
               className="w-full h-full object-cover"
             />
             {/* Hover Overlay */}

@@ -1,5 +1,5 @@
 'use client'
-import { use, useEffect, useState,Suspense } from 'react'
+import { use, useEffect, useState, Suspense } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Home, Calendar, Star, MessageCircle, User } from 'lucide-react'
@@ -20,7 +20,7 @@ export default function BlogDetailsPage() {
   );
 }
 
- function BlogDetails() {
+function BlogDetails() {
   const [showLightbox, setShowLightbox] = useState(false)
   const [blog, setBlog] = useState({})
   const router = useRouter()
@@ -114,7 +114,7 @@ export default function BlogDetailsPage() {
   if (!blog) {
     return <h1>Loading ...</h1>
   }
-  
+
   return (<>
     <div className="container mx-auto px-4 md:px-32 py-8">
       {/* Breadcrumb */}
@@ -132,7 +132,7 @@ export default function BlogDetailsPage() {
 
         {/* Left Sidebar */}
         <aside className="lg:col-span-1">
-         
+
 
           {/* Latest Products */}
           <div>
@@ -194,7 +194,8 @@ export default function BlogDetailsPage() {
             <Image
               src={blog?.detailImage}
               alt="blog-img"
-              fill
+              height={1600}
+              width={1000}
               className="object-cover"
               sizes="(max-width: 768px) 100vw, 800px"
             />

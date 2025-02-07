@@ -53,14 +53,19 @@ export const HeaderBottom = () => {
 
     },
     {
+      name: 'About Us',
+      type: 'link',
+      href: '/about-us'
+    },
+    {
       name: 'Blogs',
       type: 'link',
       href: '/blogs'
     },
     {
-      name: 'About Us',
+      name: 'Collaborate',
       type: 'link',
-      href: '/about-us'
+      href: '/collaboration'
     },
     {
       name: 'Contact us',
@@ -78,11 +83,9 @@ export const HeaderBottom = () => {
         }
       ]
     },
-    {
-      name: 'Collaborate',
-      type: 'link',
-      href: '/collaboration'
-    },
+    
+
+
   ]
 
 
