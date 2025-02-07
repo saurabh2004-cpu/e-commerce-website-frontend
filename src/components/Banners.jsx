@@ -60,7 +60,7 @@ export default function Banners() {
 
   useEffect(() => {
     fetchBanners()
-  })
+  },[])
 
 
 
