@@ -94,7 +94,7 @@ export default function BlogPage() {
     fetchAllProducts()
   }, [])
 
-  if(!allBlogs.length>0 && !latestProducts.length) return <div>Loading...</div>
+  if (!allBlogs.length > 0 && !latestProducts.length) return <div>Loading...</div>
 
   return (
     <div className="container mx-auto px-4 md:px-32 py-8">
@@ -118,16 +118,23 @@ export default function BlogPage() {
               {latestProducts.map((product) => (
                 <div key={product._id} className="flex gap-4 group">
                   <div className="relative w-24 h-20 overflow-hidden">
-                    <Image
-                      src={product.thumbnail}
-                      alt='product-img'
-                      fill
-                      className="object-cover border border-transparent hover:border-[#f4a137] transition-all "
-                    />
+                    <Link href={`/product-details?id=${product._id}`}>
+                      <Image
+                        src={product.thumbnail}
+                        alt='product-img'
+                        fill
+                        className="object-cover border border-transparent hover:border-[#f4a137] transition-all "
+                      />
+                    </Link>
                   </div>
                   <div>
                     <h4 className="font-medium hover:text-primary">
-                      <Link href={`/product-details?id=${product._id}`}>{product.name.slice(0, product.name.length - (product.name.length - 53)) + '...'}</Link>
+                      <Link
+                        href={`/product-details?id=${product._id}`}
+                        className='hover:text-[#f4a137]/90-'
+                      >
+                        {product.name.slice(0, product.name.length - (product.name.length - 53)) + '...'}
+                      </Link>
                     </h4>
                     <p className="text-primary font-semibold">${product.sellingPrice.toFixed(2).toLocaleString('en-IN')}</p>
                   </div>
@@ -187,10 +194,12 @@ export default function BlogPage() {
 
           {/* Pagination */}
           <div className="flex justify-left gap-2 mt-12">
-          {pageNo > 1 && <button
+            {pageNo > 1 && <button
               className=
               "w-8 h-8 flex items-center justify-center rounded hover:bg-gray-100"
               onClick={() => setPageNo(pageNo - 1)}
+              disabled={pageNo === 0}
+
             >
               | &lt;
             </button>}
@@ -207,7 +216,7 @@ export default function BlogPage() {
               2
             </button>
             {pageNo > 2 && <button className="w-8 h-8 flex items-center justify-center rounded hover:bg-gray-100 bg-primary text-secondary">
-              {pageNo ||  '...'}
+              {pageNo || '...'}
             </button>}
             <button
               className=

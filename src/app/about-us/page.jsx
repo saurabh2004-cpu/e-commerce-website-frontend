@@ -13,7 +13,7 @@ export default function AboutUs() {
   const [activeTestimonial, setActiveTestimonial] = useState(0)
   const [currentIndex, setCurrentIndex] = useState(0)
 
-  
+
 
   const testimonials = [
     {
@@ -37,7 +37,7 @@ export default function AboutUs() {
       name: "Kate Winslet",
       role: "Co Founder",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer condimentum",
-      
+
     },
     {
       id: 3,
@@ -45,7 +45,7 @@ export default function AboutUs() {
       name: "liam DiCaprio",
       role: "Co Founder",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer condimentum",
-      
+
     },
     {
       id: 4,
@@ -53,7 +53,7 @@ export default function AboutUs() {
       name: "Charlize Theron",
       role: "Co Founder",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer condimentum",
-      
+
     },
     {
       id: 5,
@@ -61,7 +61,7 @@ export default function AboutUs() {
       name: "Victoria Beckham",
       role: "Co Founder",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer condimentum",
-      
+
     },
     {
       id: 6,
@@ -69,7 +69,7 @@ export default function AboutUs() {
       name: "Nicole Kidman",
       role: "Co Founder",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer condimentum",
-   
+
     },
   ]
 
@@ -135,7 +135,7 @@ export default function AboutUs() {
 
       {/* About Section */}
       <div className="grid lg:grid-cols-2 gap-12 mb-16">
-        <div className="relative h-[400px] lg:h-full">
+        <div className="relative h-[400px] ">
           <Image
             src='/image/demo/about/wellcometoshop.png'
             alt="About Us"
@@ -143,21 +143,43 @@ export default function AboutUs() {
             className="object-cover rounded-lg"
           />
         </div>
-        <div>
+        <div className="relative sm:h-[400px] sm:overflow-y-scroll pr-2">
           <h2 className="text-3xl font-bold mb-6 relative inline-block">
             About Us
             <span className="absolute bottom-0 left-0 w-full h-1 bg-primary/20"></span>
           </h2>
-          <div className="space-y-4 text-gray-600">
-            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.</p>
-            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.</p>
-            <p>Nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.</p>
+          <div className="space-y-4 text-gray-600 ">
+            <h1 className="font-bold">Our Story</h1>
+            <p>
+              Welcome to homeshoppr.in, where we believe that every home deserves to be a sanctuary. Our journey began with a simple mission: to provide high quality, stylish & affordable home products that enhance the beauty & functionality of your living spaces. We started this venture out of a passion for interior design & a desire to make beautiful home decor accessible to everyone. Over the years, we have grown from a small startup into a trusted name in the industry, serving thousands of satisfied customers who share our love for beautiful homes. We take pride in curating an extensive selection of items that cater to diverese tastes & preferences, ensuring that there is something for everyone.
+            </p>
+
+            <h1 className="font-bold">Our Mission & Vision</h1>
+            <p>
+              Our mission is to inspire you to create the home of your dreams. We envision a world where every individual can express their unique style through their living spaces without breaking the bank. Our commitment extends beyond just selling products,we strive to foster creativity & help you transform your house into a true reflection of who you are. We aim to transform your living spaces into havens of comfort and style. We believe that every home deserves products that not only enhance its beauty but also improve the quality of life for those who inhabit it. Our goal is to provide a curated selection of high-quality home products that cater to diverse tastes and preferences, ensuring that you find exactly what you need to make your house a home.
+            </p>
+
+            <h1 className="font-bold">What We Offer</h1>
+            <p>
+              We offer an extensive range of home products, including:
+              Furniture: From elegant sofas to functional storage solutions, our furniture collection is designed to suit every style and space.
+              Decor: Discover an array of decorative items that add personality and charm to your home.
+              Kitchenware: Equip your kitchen with high-quality tools and gadgets that make cooking enjoyable.
+              Bedding & Linens: Experience ultimate comfort with our luxurious bedding and linens crafted from premium materials.
+              Each product is carefully selected based on quality, design, and functionality, ensuring that you receive only the best.
+            </p>
+
+            <h1 className="font-bold">What We Offer</h1>
+            <p>
+              We invite you to explore our website and discover how our products can elevate your living space. Join our community of home enthusiasts by subscribing to our newsletter for exclusive offers, tips on home decor, and inspiration for creating your dream home. Follow us on social media for inspiration,tips & exclusive offers. Your feedback is invaluable to us,feel free to reach out with any questions or suggestions. Together, let`s create homes that inspire joy & comfort!
+              Thank you for choosing homeshoppr.in as your go-to destination for all things home!
+            </p>
           </div>
         </div>
       </div>
 
       {/* Testimonials Section */}
-      <div className="mb-16 text-center">
+      {/* <div className="mb-16 text-center">
         <h2 className="text-3xl font-bold mb-8 text-center relative inline-block">
           What Clients Say
           <span className="absolute bottom-0 left-0 w-full h-1 bg-primary/20"></span>
@@ -177,7 +199,7 @@ export default function AboutUs() {
             ))}
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* Team Section */}
       <div>

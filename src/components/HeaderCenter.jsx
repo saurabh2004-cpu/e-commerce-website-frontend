@@ -114,11 +114,13 @@ export const HeaderCenter = () => {
           <div className="w-full lg:w-2/4">
             <form className="flex w-full" onSubmit={handleGetProductByKeywordOrFilter}>
               <div className="relative flex w-full h-[36px]">
-                <Select value={category} onValueChange={(value) => {
-                  setCategory(value)
-                  setSearchTerm(value)
-                  handleGetProductByKeywordOrFilter()
-                }}>
+                <Select
+                  value={category}
+                  onValueChange={(value) => {
+                    setCategory(value);
+                    setSearchTerm(value); // Update search term with category name
+                  }}
+                >
                   <SelectTrigger className="w-[140px] sm:w-[180px] rounded-none bg-[#eeeeee]">
                     <SelectValue placeholder="All Categories" />
                   </SelectTrigger>

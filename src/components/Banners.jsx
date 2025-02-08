@@ -83,9 +83,7 @@ export default function Banners() {
             <div className="absolute inset-0 p-8 flex flex-col justify-between text-white">
               <div>
               </div>
-              <button className="bg-black/80 hover:bg-black text-white px-6 py-2 w-fit transition-colors duration-300">
-                Shop Now
-              </button>
+              
             </div>
           </a>
         </div>
@@ -93,7 +91,7 @@ export default function Banners() {
         {/* Middle Column */}
         <div className="flex flex-col gap-4">
           {banners.slice(1, 3).map((banner, index) => (
-            <div key={index} className="relative group overflow-hidden rounded-lg h-[150px]">
+            <div key={index} className="relative group overflow-hidden rounded-lg h-[175px]">
               <a href="#" className="block relative h-full">
                 <img
                   src={banner?.image}

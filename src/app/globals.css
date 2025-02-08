@@ -12,13 +12,16 @@
     --background: #0a0a0a;
     --foreground: #ededed;
   }
-}
+} */
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-} */
+  font-family: 'Roboto', sans-serif;
+  -webkit-text-size-adjust: 90%; /* Control text scaling on WebKit browsers */
+  text-size-adjust: 90%; /* Control scaling on other browsers */
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
+}
 
 @layer base {
   :root {

@@ -1,6 +1,11 @@
 'use client'
 
+import axios from 'axios'
 import { MapPin, Mail, Phone } from 'lucide-react'
+import { useState } from 'react'
+import { host } from '../lib/host'
+import { useToast } from '../../@/hooks/use-toast'
+import { title } from 'process'
 
 export default function Footer() {
   const mainSections = {
@@ -46,6 +51,47 @@ export default function Footer() {
     'FOOTWEAR:': 'Shoes | Casual Shoes | Adidas Shoes | Gas Shoes | Puma Shoes | Reebok Shoes | Woodland Shoes | Red tape Shoes | Nike Shoes'
   }
 
+  const { toast } = useToast();
+
+  const handleGetProductsByCategory = async (category) => {
+    try {
+
+      console.log("searchTerm category", category)
+
+      const response = await axios.get(`${host}/api/v1/products?search=${category}`,
+        {
+          withCredentials: true,
+          headers: {
+            Accept: 'application/json',
+          },
+        }
+      )
+      console.log("searched", response.data)
+
+
+
+      if (response.data.statusCode === 200 && response.data.data.length > 0) {
+
+        setSearchTerm("")
+        router.push(`/products?category=${category}&products=${response.data.data}`);
+      } else {
+        toast({
+          title: 'No products found',
+          description: "No product found with this search",
+          duration: 3000,
+        })
+      }
+
+
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+
+
+
+
   return (
     <footer className="bg-gray-100 pt-12 pb-4 p-6 sm:px-32">
       {/* Main Footer */}
@@ -86,10 +132,10 @@ export default function Footer() {
               <div key={category} className="text-sm">
                 <span className="font-semibold text-gray-700">{category}</span>{' '}
                 {items.split('|').map((item, index, array) => (
-                  <span key={index}>
+                  <span key={index} onClick={() => handleGetProductsByCategory(item.trim())}>
                     <a
-                      href="#"
-                      className="text-gray-600 hover:text-orange-500 transition-colors"
+                      // href="#"
+                      className="cursor-pointer text-gray-600 hover:text-orange-500 transition-colors"
                     >
                       {item.trim()}
                     </a>

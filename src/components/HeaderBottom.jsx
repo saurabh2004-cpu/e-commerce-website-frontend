@@ -22,6 +22,7 @@ import {
 import axios from 'axios'
 import { host } from '../lib/host'
 import { usePathname, } from 'next/navigation'
+import { useToast } from '../../@/hooks/use-toast'
 
 export const HeaderBottom = () => {
   const [isVerticalMenuOpen, setIsVerticalMenuOpen] = useState(false)
@@ -30,6 +31,7 @@ export const HeaderBottom = () => {
   const [allCategories, setAllCategories] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const pathname = usePathname();
+  const { toast } = useToast();
 
   //set vertical menu open for only home page 
   useEffect(() => {
@@ -83,7 +85,7 @@ export const HeaderBottom = () => {
         }
       ]
     },
-    
+
 
 
   ]
@@ -105,9 +107,13 @@ export const HeaderBottom = () => {
         console.log("cate", response.data.data)
         const sortedCategories = response.data.data.sort((a, b) => a.name.localeCompare(b.name));
         setAllCategories(sortedCategories)
-
       }
     } catch (error) {
+      toast({
+        title: 'Error',
+        description: "Error while fetching product categories",
+        duration: 3000,
+      })
       setError(error);
       console.error(error)
     }
@@ -138,9 +144,20 @@ export const HeaderBottom = () => {
       if (response.data.statusCode === 200 && response.data.data.length > 0) {
         setSearchTerm("")
         router.push(`/products?category=${category}&products=${response.data.data}`);
+      } else {
+        toast({
+          title: 'No products found',
+          description: "No product found with this search",
+          duration: 3000,
+        })
       }
 
     } catch (error) {
+      toast({
+        title: 'Error',
+        description: "Error while fetching products",
+        duration: 3000,
+      })
       console.error(error)
     }
   }
@@ -337,7 +354,14 @@ export const HeaderBottom = () => {
                             {category.subCategories &&
                               <>
                                 {category.subCategories.map((category, idx) => (
-                                  <div key={idx} className="">
+                                  <div
+                                    key={idx}
+                                    className="cursor-pointer"
+                                    onClick={(e) => {
+                                      setSearchTerm(category.name)
+                                      handleGetProductsByCategory(category.name)
+                                    }}
+                                  >
                                     <h4 className=" text-[#444444]">{category.name}</h4>
                                   </div>
                                 ))}
