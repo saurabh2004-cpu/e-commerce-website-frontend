@@ -16,17 +16,21 @@ const ProductsByCategory = () => {
 
     const searchParams = useSearchParams();
     const category = searchParams.get('category');
-    const products = searchParams.get('products');
+    let products = searchParams.get('products') || '[]';
 
-    useEffect(() => {
-        console.log("category on cat", category)
-        console.log("products on cat", products)
-    })
+    if(products === '[]') return null
+
+    products = JSON.parse(decodeURIComponent(products));
+
+    // useEffect(() => {
+    //     console.log("category on cat", category)
+    //     console.log("parsedproducts on cat", products)
+    // })
 
 
     return (
         <div>
-            <ProductsCards title={category} products={products} />
+            <ProductsCards title={category} propProducts={products} />
         </div>
     )
 }

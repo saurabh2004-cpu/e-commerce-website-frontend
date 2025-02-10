@@ -21,8 +21,9 @@ import {
 } from "./ui/accordion"
 import axios from 'axios'
 import { host } from '../lib/host'
-import { usePathname, } from 'next/navigation'
+import { usePathname, useRouter, } from 'next/navigation'
 import { useToast } from '../../@/hooks/use-toast'
+import CategoryCards from './CategoryCards'
 
 export const HeaderBottom = () => {
   const [isVerticalMenuOpen, setIsVerticalMenuOpen] = useState(false)
@@ -30,8 +31,10 @@ export const HeaderBottom = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [allCategories, setAllCategories] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [categoryProducts, setCategoryProducts] = useState([]);
   const pathname = usePathname();
   const { toast } = useToast();
+  const router = useRouter();
 
   //set vertical menu open for only home page 
   useEffect(() => {
@@ -104,7 +107,7 @@ export const HeaderBottom = () => {
       )
 
       if (response.status === 200) {
-        console.log("cate", response.data.data)
+        // console.log("cate", response.data.data)
         const sortedCategories = response.data.data.sort((a, b) => a.name.localeCompare(b.name));
         setAllCategories(sortedCategories)
       }
@@ -143,7 +146,8 @@ export const HeaderBottom = () => {
 
       if (response.data.statusCode === 200 && response.data.data.length > 0) {
         setSearchTerm("")
-        router.push(`/products?category=${category}&products=${response.data.data}`);
+        const serializedProducts = encodeURIComponent(JSON.stringify(response.data.data));
+        router.push(`/products?category=${category}&&products=${serializedProducts}`);
       } else {
         toast({
           title: 'No products found',

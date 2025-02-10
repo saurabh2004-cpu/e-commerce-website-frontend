@@ -42,7 +42,7 @@ export const HeaderCenter = () => {
       )
 
       if (response.status === 200) {
-        console.log("categories", response)
+        // console.log("categories", response)
         setAllCategories(response.data.data)
       }
     } catch (error) {
@@ -51,14 +51,14 @@ export const HeaderCenter = () => {
     }
   }
 
-  //search product by keyword or filter
-  const handleGetProductByKeywordOrFilter = async (e) => {
-    e?.preventDefault()
+  //search product by keyword 
+  const handleGetProductByKeyword = async (e, query) => {
+    e?.preventDefault();
     try {
 
-      console.log("search", searchTerm)
+      console.log("search", query)
 
-      const response = await axios.get(`${host}/api/v1/products?search=${searchTerm}`,
+      const response = await axios.get(`${host}/api/v1/products?search=${query}`,
         {
           withCredentials: true,
           headers: {
@@ -71,11 +71,37 @@ export const HeaderCenter = () => {
       if (response.data.statusCode === 200 && response.data.data.length > 0) {
 
         setProduct(response.data.data[0])
-        setSearchTerm("")
         router.push(`/product-details?id=${response.data.data[0]._id}`);
 
       } else if (response.data.statusCode === 200 && response.data.data.length > 1) {
         router.push(`/products?category=${category}&products=${response.data.data}`);
+      }
+
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  //search product by category
+  const handleGetProductByFilter = async (category) => {
+    try {
+
+      console.log("search", category)
+
+      const response = await axios.get(`${host}/api/v1/products?search=${category}`,
+        {
+          withCredentials: true,
+          headers: {
+            Accept: 'application/json',
+          },
+        }
+      )
+      console.log("searched", response)
+
+      if (response.data.statusCode === 200 && response.data.data.length > 0) {
+
+        const serializedProducts = encodeURIComponent(JSON.stringify(response.data.data));
+        router.push(`/products?category=${category}&&products=${serializedProducts}`);
       }
 
     } catch (error) {
@@ -112,13 +138,13 @@ export const HeaderCenter = () => {
 
           {/* Search */}
           <div className="w-full lg:w-2/4">
-            <form className="flex w-full" onSubmit={handleGetProductByKeywordOrFilter}>
+            <form className="flex w-full" onSubmit={(e) => handleGetProductByKeyword(e, searchTerm)}>
               <div className="relative flex w-full h-[36px]">
                 <Select
                   value={category}
                   onValueChange={(value) => {
                     setCategory(value);
-                    setSearchTerm(value); // Update search term with category name
+                    handleGetProductByFilter(value);
                   }}
                 >
                   <SelectTrigger className="w-[140px] sm:w-[180px] rounded-none bg-[#eeeeee]">

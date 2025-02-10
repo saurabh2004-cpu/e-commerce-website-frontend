@@ -47,7 +47,7 @@ export default function Banners() {
         }
       })
 
-      console.log("respose banners", response)
+      // console.log("respose banners", response)
 
       if (response.data.statusCode === 200) {
         setBanners(response.data.data)
