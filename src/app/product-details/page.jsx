@@ -91,8 +91,8 @@ function ProductDetails() {
                     <Home className="w-4 h-4" />
                 </Link>
                 <span>/</span>
-                <Link href="/shop" className="text-gray-500 hover:text-primary">
-                    Shop
+                <Link href="#" className="text-gray-500 hover:text-primary">
+                    Product-Details
                 </Link>
                 <span>/</span>
                 <span className="text-primary">{product?.category}</span>

@@ -18,6 +18,7 @@ import { useEffect, useState } from "react"
 import { host } from '../lib/host'
 import { useRouter } from "next/navigation"
 import axios from "axios"
+import { useToast } from "../../@/hooks/use-toast"
 
 
 export const HeaderCenter = () => {
@@ -27,6 +28,7 @@ export const HeaderCenter = () => {
   const [product, setProduct] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const router = useRouter();
+  const toast = useToast()
 
 
   //fetch categories
@@ -45,9 +47,20 @@ export const HeaderCenter = () => {
         // console.log("categories", response)
         setAllCategories(response.data.data)
       }
+
+      toast({
+        title: 'Error',
+        description: "Error while fetching product categories",
+        duration: 3000,
+      })
     } catch (error) {
       setError(error);
       console.error(error)
+      toast({
+        title: 'Error',
+        description: "Error while fetching product categories",
+        duration: 3000,
+      })
     }
   }
 
@@ -73,16 +86,25 @@ export const HeaderCenter = () => {
         setProduct(response.data.data[0])
         router.push(`/product-details?id=${response.data.data[0]._id}`);
 
-      } else if (response.data.statusCode === 200 && response.data.data.length > 1) {
-        router.push(`/products?category=${category}&products=${response.data.data}`);
       }
 
+      toast({
+        title: "No Products Found",
+        description: "No product found with this search",
+        duration: 3000,
+      })
+
     } catch (error) {
+      toast({
+        title: "Error",
+        description: "Error while searching product",
+        duration: 3000,
+      })
       console.error(error)
     }
   }
 
-  //search product by category
+  //search product by Filter
   const handleGetProductByFilter = async (category) => {
     try {
 
@@ -104,7 +126,17 @@ export const HeaderCenter = () => {
         router.push(`/products?category=${category}&&products=${serializedProducts}`);
       }
 
+      toast({
+        title: "No Products Found",
+        description: "No product found with this search",
+        duration: 3000,
+      })
     } catch (error) {
+      toast({
+        title: "Error",
+        description: "Error while searching product",
+        duration: 3000,
+      })
       console.error(error)
     }
   }
