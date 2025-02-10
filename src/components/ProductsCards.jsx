@@ -57,7 +57,7 @@ export default function ProductGrid({ title = "NEW PRODUCTS", propProducts = [] 
           products.map((product) => (
             <div key={product._id} className="bg-white rounded-lg shadow-md group">
               {/* Product Images with Hover Effect */}
-              <div className="relative overflow-hidden">
+              <div className="relative overflow-hidden  min-h-[300px]">
                 <span className="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 rounded-md text-sm z-10">
                   17%
                 </span>
@@ -71,20 +71,20 @@ export default function ProductGrid({ title = "NEW PRODUCTS", propProducts = [] 
                 <img
                   src={product.thumbnail}
                   alt={product.name}
-                  className="w-full h-[300px] object-cover transition-opacity duration-300 group-hover:opacity-0"
+                  className="w-full h-[300px] object-cover-cover- transition-opacity duration-300 group-hover:opacity-0"
                 />
                 <div className="absolute inset-0 flex flex-col items-center justify-end">
                   <img
                     src={product.images[0]}
                     alt={`${product.productDescriptionImage} - alternate view`}
-                    className="w-full h-[300px] object-cover transform translate-y-full transition-transform duration-300 group-hover:translate-y-0"
+                    className="w-full h-[300px] object-cover-cover transform translate-y-full transition-transform duration-300 group-hover:translate-y-0"
                     onClick={() => handleNavigateToProductDetails(product._id)}
                   />
                 </div>
               </div>
 
               {/* Product Info */}
-              <div className="p-2">
+              <div className="p-2 flex flex-col justify-between h-[130px]">
                 <h3 className="text-lg font-medium mb-2">
                   {product.name.length > 53 ? product.name.slice(0, 53) + "..." : product.name}
                 </h3>

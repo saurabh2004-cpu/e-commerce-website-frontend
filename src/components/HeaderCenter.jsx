@@ -28,7 +28,7 @@ export const HeaderCenter = () => {
   const [product, setProduct] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const router = useRouter();
-  const toast = useToast()
+  const { toast } = useToast();
 
 
   //fetch categories
@@ -46,13 +46,14 @@ export const HeaderCenter = () => {
       if (response.status === 200) {
         // console.log("categories", response)
         setAllCategories(response.data.data)
+      }else if(response.status===200 && response.data.data.length === 0){
+        toast({
+          title: 'Error',
+          description: "Error while fetching product categories",
+          duration: 3000,
+        })
       }
 
-      toast({
-        title: 'Error',
-        description: "Error while fetching product categories",
-        duration: 3000,
-      })
     } catch (error) {
       setError(error);
       console.error(error)

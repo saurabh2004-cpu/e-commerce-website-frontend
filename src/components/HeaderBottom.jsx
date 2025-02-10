@@ -23,7 +23,6 @@ import axios from 'axios'
 import { host } from '../lib/host'
 import { usePathname, useRouter, } from 'next/navigation'
 import { useToast } from '../../@/hooks/use-toast'
-import CategoryCards from './CategoryCards'
 
 export const HeaderBottom = () => {
   const [isVerticalMenuOpen, setIsVerticalMenuOpen] = useState(false)
@@ -31,7 +30,6 @@ export const HeaderBottom = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [allCategories, setAllCategories] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [categoryProducts, setCategoryProducts] = useState([]);
   const pathname = usePathname();
   const { toast } = useToast();
   const router = useRouter();
@@ -414,9 +412,7 @@ export const HeaderBottom = () => {
 
                 {/* right side icons */}
                 <ul className='flex items-center gap-2  '>
-                  <li className='hover:text-[#f4a137]'><Link href='/'><Instagram className='h-5 w-10 ' /></Link></li>
-                  <li className='hover:text-[#f4a137]'><Link href='/'><Facebook className='h-5 w-10 ' /></Link></li>
-                  <li className='hover:text-[#f4a137]'><Link href='/'><Twitter className='h-5 w-10 ' /></Link></li>
+                  <li className='hover:text-[#f4a137]'><Link href='https://www.instagram.com/home.shoppr?igsh=anZqbDJxbGJyZnV4'><Instagram className='h-5 w-10 ' /></Link></li>
                 </ul>
               </ul>
 

@@ -139,7 +139,7 @@ export function BlockSpotLight1() {
                     src={slide.src}
                     alt={slide.alt}
                     fill
-                    className="object-cover"
+                    className=""
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent">
                     <div className="absolute bottom-4 md:bottom-8 left-4 md:left-8 text-white">
