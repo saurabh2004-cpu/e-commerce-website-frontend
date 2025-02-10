@@ -128,40 +128,7 @@ export const HeaderBottom = () => {
 
   //search product by category
   const handleGetProductsByCategory = async (category) => {
-    try {
-
-      console.log("searchTerm category", category)
-
-      const response = await axios.get(`${host}/api/v1/products?search=${category}`,
-        {
-          withCredentials: true,
-          headers: {
-            Accept: 'application/json',
-          },
-        }
-      )
-      console.log("searched", response.data)
-
-      if (response.data.statusCode === 200 && response.data.data.length > 0) {
-        setSearchTerm("")
-        const serializedProducts = encodeURIComponent(JSON.stringify(response.data.data));
-        router.push(`/products?category=${category}&&products=${serializedProducts}`);
-      } else {
-        toast({
-          title: 'No products found',
-          description: "No product found with this search",
-          duration: 3000,
-        })
-      }
-
-    } catch (error) {
-      toast({
-        title: 'Error',
-        description: "Error while fetching products",
-        duration: 3000,
-      })
-      console.error(error)
-    }
+    router.push(`/products?category=${category}`);
   }
 
   //contact us dropdown

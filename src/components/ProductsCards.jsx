@@ -33,6 +33,7 @@ export default function ProductGrid({ title = "NEW PRODUCTS", propProducts = [] 
     }
   };
 
+
   useEffect(() => {
     if (!propProducts.length) {
       fetchAllProducts();
@@ -40,7 +41,8 @@ export default function ProductGrid({ title = "NEW PRODUCTS", propProducts = [] 
       setProducts(propProducts);
       setLoading(false);
     }
-  }, []);
+
+  }, [products,propProducts]);
 
   return (
     <div className="container mx-auto px-6 pt-32 sm:px-32 py-8">

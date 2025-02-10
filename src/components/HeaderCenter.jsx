@@ -46,7 +46,7 @@ export const HeaderCenter = () => {
       if (response.status === 200) {
         // console.log("categories", response)
         setAllCategories(response.data.data)
-      }else if(response.status===200 && response.data.data.length === 0){
+      } else if (response.status === 200 && response.data.data.length === 0) {
         toast({
           title: 'Error',
           description: "Error while fetching product categories",
@@ -107,39 +107,7 @@ export const HeaderCenter = () => {
 
   //search product by Filter
   const handleGetProductByFilter = async (category) => {
-    try {
-
-      console.log("search", category)
-
-      const response = await axios.get(`${host}/api/v1/products?search=${category}`,
-        {
-          withCredentials: true,
-          headers: {
-            Accept: 'application/json',
-          },
-        }
-      )
-      console.log("searched", response)
-
-      if (response.data.statusCode === 200 && response.data.data.length > 0) {
-
-        const serializedProducts = encodeURIComponent(JSON.stringify(response.data.data));
-        router.push(`/products?category=${category}&&products=${serializedProducts}`);
-      }
-
-      toast({
-        title: "No Products Found",
-        description: "No product found with this search",
-        duration: 3000,
-      })
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Error while searching product",
-        duration: 3000,
-      })
-      console.error(error)
-    }
+    router.push(`/products?category=${category}`);
   }
 
   useEffect(() => {

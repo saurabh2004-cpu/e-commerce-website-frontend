@@ -60,11 +60,6 @@ function ProductDetails() {
                 setProduct(response.data.data)
             }
 
-            toast({
-                title: "Error",
-                description: response.data.message,
-                duration: 3000,
-            })
         } catch (error) {
             setError(error)
             console.error(error)
