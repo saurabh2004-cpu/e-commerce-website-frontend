@@ -48,7 +48,7 @@ export default function ProductGrid({ title = "NEW PRODUCTS", propProducts = [] 
     <div className="container mx-auto px-6 pt-32 sm:px-32 py-8">
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
-        <h2 className="text-2xl font-semibold">{title}</h2>
+        <h2 className="text-m sm:text-2xl sm:font-semibold !important">{title}</h2>
       </div>
 
       {/* Product Grid or Skeleton Loader */}
