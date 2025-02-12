@@ -129,24 +129,20 @@ export function BlockSpotLight1() {
           {/* Main Slider */}
           <div className="md:col-span-8 relative">
             <div className="relative h-[300px] md:h-[510px] overflow-hidden">
-              {sliderImages.map((slide, index) => (
+              {banners.map((banner, index) => (
                 <div
-                  key={index}
+                  key={banner._id}
                   className={`absolute inset-0 transition-opacity duration-500 ${currentSlide === index ? 'opacity-100' : 'opacity-0'
                     }`}
                 >
                   <Image
-                    src={slide.src}
-                    alt={slide.alt}
+                    src={banner.image}
+                    alt='banner'
                     fill
-                    className=""
+                    className="object-cover-contain"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent">
-                    <div className="absolute bottom-4 md:bottom-8 left-4 md:left-8 text-white">
-                      <button className="bg-[#f4a137] hover:bg-[#f4a137]/90 px-4 py-2 text-sm md:px-6 md:py-2 rounded-md font-medium">
-                        {slide.cta}
-                      </button>
-                    </div>
+                    
                   </div>
                 </div>
               ))}

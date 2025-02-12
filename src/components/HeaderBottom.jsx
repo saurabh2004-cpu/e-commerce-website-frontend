@@ -186,7 +186,6 @@ export const HeaderBottom = () => {
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" className="lg:hidden text-white">
                 <Menu className="h-6 w-6" />
-                <span className="sr-only">Open mobile menu</span>
               </Button>
             </SheetTrigger>
             <SheetContent side="left" className="w-[300px] p-0 max-h-screen overflow-y-auto">
@@ -195,40 +194,32 @@ export const HeaderBottom = () => {
               </SheetHeader>
               <div className="overflow-y-auto">
                 <Accordion type="single" collapsible className="w-full">
+                  {/* Categories */}
                   <AccordionItem value="categories">
                     <AccordionTrigger className="px-4">All Categories</AccordionTrigger>
                     <AccordionContent className="pb-4">
-                      <div className="space-y-1 over">
+                      <div className="space-y-1">
                         {allCategories.map((category) => (
-                          <Accordion
-                            key={category._id}
-                            type="single"
-                            collapsible
-                            className="w-full"
-                          >
+                          <Accordion key={category._id} type="single" collapsible className="w-full">
                             <AccordionItem value={category._id}>
                               {category.subCategories && category.subCategories.length > 0 ? (
                                 <>
                                   <AccordionTrigger className="px-4 py-2">
-                                    <span
-                                      className="flex items-center gap-2"
-                                      onClick={() => {
-                                        handleGetProductsBySubCategory(category.name)
-                                        setSearchTerm(category.name)
-                                      }}
-                                    >
+                                    <span className="flex items-center gap-2"
+                                      onClick={(e) => {
+                                        e.stopPropagation()
+                                        handleGetProductsByCategory(category.name)
+                                        setIsMobileMenuOpen(false)
+                                      }}>
                                       {category.name}
                                     </span>
                                   </AccordionTrigger>
                                   <AccordionContent>
                                     <div className="space-y-4 px-4">
                                       {category.subCategories.map((subcategory, idx) => (
-                                        <Link
-                                          key={idx}
-                                          href={`/category/${subcategory.name}`}
+                                        <Link key={idx} href={`/products?subcategory=${subcategory.name}`}
                                           className="block text-sm text-gray-700 hover:text-primary"
-                                          onClick={() => setIsMobileMenuOpen(false)}
-                                        >
+                                          onClick={() => setIsMobileMenuOpen(false)}>
                                           {subcategory.name}
                                         </Link>
                                       ))}
@@ -236,13 +227,13 @@ export const HeaderBottom = () => {
                                   </AccordionContent>
                                 </>
                               ) : (
-                                <Link
-                                  href={`/category/${category.name}`}
-                                  className="flex items-center gap-2 px-4 py-2 text-sm hover:bg-accent"
-                                  onClick={() => setIsMobileMenuOpen(false)}
-                                >
+                                <button className="w-full text-left px-4 py-2 text-sm text-gray-800 hover:bg-gray-200"
+                                  onClick={() => {
+                                    handleGetProductsByCategory(category.name)
+                                    setIsMobileMenuOpen(false)
+                                    }}>
                                   {category.name}
-                                </Link>
+                                </button>
                               )}
                             </AccordionItem>
                           </Accordion>
@@ -250,49 +241,27 @@ export const HeaderBottom = () => {
                       </div>
                     </AccordionContent>
                   </AccordionItem>
+
+                  {/* Menu Items */}
                   {menuItems.map((item) => (
                     <AccordionItem key={item.name} value={item.name}>
                       {item.type === 'dropdown' ? (
                         <>
-                          <AccordionTrigger className="px-4">
-                            <span className="flex items-center gap-2">
-                              {item.name}
-                              {item.hot && (
-                                <span className="rounded bg-red-500 px-1 py-0.5 text-[10px] font-bold text-white">
-                                  Hot
-                                </span>
-                              )}
-                            </span>
-                          </AccordionTrigger>
+                          <AccordionTrigger className="px-4">{item.name}</AccordionTrigger>
                           <AccordionContent>
                             <div className="space-y-4 px-4">
                               {item.content?.map((section, idx) => (
-                                <div key={idx}>
-                                  <h4 className="mb-2 font-medium">{section.title}</h4>
-                                  <ul className="space-y-2">
-                                    {section.links?.map((link, linkIdx) => (
-                                      <li key={linkIdx}>
-                                        <Link
-                                          href="#"
-                                          className="block text-sm text-muted-foreground hover:text-primary"
-                                          onClick={() => setIsMobileMenuOpen(false)}
-                                        >
-                                          {link}
-                                        </Link>
-                                      </li>
-                                    ))}
-                                  </ul>
+                                <div key={idx} className="flex items-center gap-2 text-sm text-gray-700">
+                                  {section.icon}
+                                  <span className="hover:text-primary">{section.title}</span>
                                 </div>
                               ))}
                             </div>
                           </AccordionContent>
                         </>
                       ) : (
-                        <Link
-                          href={item.href}
-                          className="flex items-center px-4 py-2 hover:bg-accent"
-                          onClick={() => setIsMobileMenuOpen(false)}
-                        >
+                        <Link href={item.href} className="flex px-4 py-2 hover:bg-accent"
+                          onClick={() => setIsMobileMenuOpen(false)}>
                           {item.name}
                         </Link>
                       )}
@@ -348,7 +317,7 @@ export const HeaderBottom = () => {
                                     className="cursor-pointer"
                                     onClick={(e) => {
                                       setSearchTerm(category.name)
-                                      handleGetProductsByCategory(category.name)
+                                      handleGetProductsBySubCategory(category.name)
                                     }}
                                   >
                                     <h4 className=" text-[#444444]">{category.name}</h4>

@@ -29,7 +29,7 @@ const ProductsByCategory = () => {
     const handleGetProductsByCategory = async () => {
         try {
 
-            console.log("searchTerm category", category)
+            console.log(" category", category)
 
             const response = await axios.get(`${host}/api/v1/products?category=${category}`,
                 {
@@ -67,7 +67,7 @@ const ProductsByCategory = () => {
     const handleGetProductsBySubCategory = async () => {
         try {
 
-            console.log("searchTerm category", subCategory)
+            console.log(" subcategory", subCategory)
             setLoading(true)
 
             const response = await axios.get(`${host}/api/v1/products?subCategory=${subCategory}`,
@@ -112,7 +112,9 @@ const ProductsByCategory = () => {
     }, [subCategory])
 
     useEffect(() => {
-        handleGetProductsByCategory()
+        if (!subCategory) {
+            handleGetProductsByCategory()
+        }
 
         if (products.length > 0) {
             console.log("Products", products)
