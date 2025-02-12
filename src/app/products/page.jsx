@@ -19,7 +19,10 @@ const ProductsByCategory = () => {
 
     const searchParams = useSearchParams();
     const category = searchParams.get('category');
+    const subCategory = searchParams.get('subcategory');
+
     const [products, setProducts] = useState([])
+    const [loading, setLoading] = useState(false)
     const { toast } = useToast();
 
     //search product by category
@@ -28,7 +31,7 @@ const ProductsByCategory = () => {
 
             console.log("searchTerm category", category)
 
-            const response = await axios.get(`${host}/api/v1/products?search=${category}`,
+            const response = await axios.get(`${host}/api/v1/products?category=${category}`,
                 {
                     withCredentials: true,
                     headers: {
@@ -40,36 +43,95 @@ const ProductsByCategory = () => {
 
             if (response.data.statusCode === 200 && response.data.data.length > 0) {
                 setProducts(response.data.data)
-            } else {
-                toast({
-                    title: 'No products found',
-                    description: "No product found with this search",
-                    duration: 3000,
-                })
+            } else if (response.data.statusCode === 200 && response.data.data.length === 0) {
+                {
+                    toast({
+                        title: 'No products found',
+                        description: "No product found with this search",
+                        duration: 3000,
+                    })
+                }
+            }
+
+
+        } catch (error) {
+            toast({
+                title: error.response.data.message,
+                description: "No product found with this search ",
+                duration: 3000,
+            })
+        }
+    }
+
+    //search product by subcategory
+    const handleGetProductsBySubCategory = async () => {
+        try {
+
+            console.log("searchTerm category", subCategory)
+            setLoading(true)
+
+            const response = await axios.get(`${host}/api/v1/products?subCategory=${subCategory}`,
+                {
+                    withCredentials: true,
+                    headers: {
+                        Accept: 'application/json',
+                    },
+                }
+            )
+            console.log("searched", response.data)
+
+            if (response.data.statusCode === 200 && response.data.data.length > 0) {
+                setProducts(response.data.data)
+                setLoading(false)
+            } else if (response.data.statusCode === 200 && response.data.data.length === 0) {
+                {
+                    toast({
+                        title: 'No products found',
+                        description: "No product found with this search",
+                        duration: 3000,
+                    })
+                }
             }
 
         } catch (error) {
             toast({
-                title: 'Error',
-                description: "Error while fetching products",
+                title: error.response.data.message,
+                description: "No product found with this search ",
                 duration: 3000,
             })
-            console.error(error)
+        } finally {
+            setLoading(false)
         }
     }
+
+
+    useEffect(() => {
+        if (subCategory) {
+            handleGetProductsBySubCategory()
+        }
+    }, [subCategory])
 
     useEffect(() => {
         handleGetProductsByCategory()
 
-        if(products.length>0){
-            console.log("Products",products)
+        if (products.length > 0) {
+            console.log("Products", products)
         }
-    },[category])
+    }, [category])
 
+    if (loading) {
+        return (
+            <div>Loading...</div>
+        )
+    }
 
     return (
         <div>
-           {products && <ProductsCards title={category} propProducts={products} />}
+            {products.length > 0 && <ProductsCards title={category} propProducts={products} />}
+
+            {!products.length && <div className=' grid justify-center align-middle text-center text-2xl font-bold mt-4 mb-4 '>
+                Products Not Found With This Category
+            </div>}
         </div>
     )
 }

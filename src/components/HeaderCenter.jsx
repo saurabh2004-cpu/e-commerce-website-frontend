@@ -107,7 +107,18 @@ export const HeaderCenter = () => {
 
   //search product by Filter
   const handleGetProductByFilter = async (category) => {
-    router.push(`/products?category=${category}`);
+    try {
+      router.push(`/products?category=${category}`);
+    } catch (error) {
+      toast({
+        title: "No Products Found",
+        description: "No product found with this search",
+        duration: 3000,
+      })
+      console.error(error)
+    }
+
+
   }
 
   useEffect(() => {

@@ -72,7 +72,7 @@ export const HeaderBottom = () => {
     },
     {
       name: 'Contact us',
-      type: 'link',
+      type: 'dropdown',
       href: '/',
       content: [
         {
@@ -128,7 +128,27 @@ export const HeaderBottom = () => {
 
   //search product by category
   const handleGetProductsByCategory = async (category) => {
-    router.push(`/products?category=${category}`);
+    try {
+      router.push(`/products?category=${category}`);
+    } catch (error) {
+      toast({
+        title: "No Products Found",
+        description: "No product found with this search",
+        duration: 3000,
+      })
+    }
+  }
+
+  const handleGetProductsBySubCategory = (subcategory) => {
+    try {
+      router.push(`/products?subcategory=${subcategory}`);
+    } catch (error) {
+      toast({
+        title: "No Products Found",
+        description: "No product found with this search",
+        duration: 3000,
+      })
+    }
   }
 
   //contact us dropdown
@@ -160,7 +180,7 @@ export const HeaderBottom = () => {
   return (
     <div className="w-full bg-[#444444] text-white px-4 lg:px-32 overflow-visible relative">
       <div className="container mx-auto relative">
-        <div className="flex items-center lg:items-stretch">
+        <div className="flex items-center lg:items-stretch ">
           {/* Mobile Menu */}
           <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
             <SheetTrigger asChild>
@@ -169,7 +189,7 @@ export const HeaderBottom = () => {
                 <span className="sr-only">Open mobile menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="w-[300px] p-0">
+            <SheetContent side="left" className="w-[300px] p-0 max-h-screen overflow-y-auto">
               <SheetHeader className="border-b p-4">
                 <SheetTitle>Menu</SheetTitle>
               </SheetHeader>
@@ -178,7 +198,7 @@ export const HeaderBottom = () => {
                   <AccordionItem value="categories">
                     <AccordionTrigger className="px-4">All Categories</AccordionTrigger>
                     <AccordionContent className="pb-4">
-                      <div className="space-y-1">
+                      <div className="space-y-1 over">
                         {allCategories.map((category) => (
                           <Accordion
                             key={category._id}
@@ -193,7 +213,7 @@ export const HeaderBottom = () => {
                                     <span
                                       className="flex items-center gap-2"
                                       onClick={() => {
-                                        handleGetProductsByCategory(category.name)
+                                        handleGetProductsBySubCategory(category.name)
                                         setSearchTerm(category.name)
                                       }}
                                     >

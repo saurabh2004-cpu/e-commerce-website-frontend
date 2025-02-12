@@ -136,3 +136,8 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+h2.custom-style {
+  font-size: 1rem !important;
+  all: unset; /* Resets inherited or global styles */
+}

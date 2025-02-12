@@ -169,7 +169,7 @@ export default function AboutUs() {
               Each product is carefully selected based on quality, design, and functionality, ensuring that you receive only the best.
             </p>
 
-            <h1 className="font-bold">What We Offer</h1>
+            <h1 className="font-bold">Join Our Community</h1>
             <p>
               We invite you to explore our website and discover how our products can elevate your living space. Join our community of home enthusiasts by subscribing to our newsletter for exclusive offers, tips on home decor, and inspiration for creating your dream home. Follow us on social media for inspiration,tips & exclusive offers. Your feedback is invaluable to us,feel free to reach out with any questions or suggestions. Together, let`s create homes that inspire joy & comfort!
               Thank you for choosing homeshoppr.in as your go-to destination for all things home!

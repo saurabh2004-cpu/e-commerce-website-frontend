@@ -158,7 +158,7 @@ function ProductDetails() {
                             className="bg-black text-white p-2 mt-4 hover:bg-gray-800"
                             onClick={() => handleAffiliateLink(product?.affiliateLink)}
                         >
-                            BUY ON AMAZON
+                            BUY NOW
                         </button>
 
 
